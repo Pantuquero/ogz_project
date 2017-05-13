@@ -1,0 +1,15 @@
+.error {
+    color: red;
+}
+
+.mensaje {
+    color: black !important;
+}
+
+.malo {
+    background-color: #c2f0c2 !important;
+}
+
+.bueno {
+    background-color: #ffb3b3 !important;
+}
