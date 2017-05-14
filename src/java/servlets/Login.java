@@ -8,11 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import clases.Conexion;
+import clases.ConversorMD5;
 import clases.Usuario;
 import clases.GestorBDD;
+import javax.servlet.http.HttpSession;
 
 
-
+/**
+ * This servlet is called by the login.jsp, checks user information with the DB
+ * when users try to login.
+ * @author Pantuquero
+ */
 @WebServlet(name = "login", urlPatterns = {"/login"})
 public class Login extends HttpServlet {
 
@@ -31,18 +37,28 @@ public class Login extends HttpServlet {
         Conexion conexion = new Conexion();
         String nombre = request.getParameter("nombreusu");
         String contrasena = request.getParameter("contrasena");
-        Usuario usuario_provisional = new Usuario("nomail", nombre, contrasena);
+        Usuario usuario_provisional = new Usuario("nomail", nombre, ConversorMD5.convertirMD5(contrasena));
         
         try {
             boolean validacion_usuario = GestorBDD.validarUsuario(usuario_provisional);
 
             if(validacion_usuario){
-                response.sendRedirect("index.jsp");
+                
+                // Creo la sesión y le paso el usuario
+                HttpSession sesion = request.getSession(true);
+                sesion.setMaxInactiveInterval(600); //10 min de sesion
+                Usuario usuario = GestorBDD.recibirUsuario(usuario_provisional.getNombre());
+                sesion.setAttribute("usuario", usuario);
+                
+                // Redirijo al main
+                //response.sendRedirect("index.jsp");
+                response.sendRedirect("/orgamingzation/Index");
+                //request.getRequestDispatcher("/Index.java").forward(request, response);
             } else {
+                // Usuario fallido, devuelvo al login con un mensaje de error
                 request.setAttribute("mensaje", "Incorrect username/password.");
                 request.setAttribute("tipo_mensaje","false");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-                //response.sendRedirect("login.jsp");
             }
         } catch(Exception e) {
             e.printStackTrace();

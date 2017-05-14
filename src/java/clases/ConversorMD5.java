@@ -5,8 +5,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * This class is used to easily manipulate MD5 hash.
+ * @author Pantuquero
+ */
 public class ConversorMD5 {
     
+    /**
+     * Returns the passed String cyphrated as MD5
+     * @param entrada
+     * @return String
+     */
     public static String convertirMD5(String entrada){
         
         try {

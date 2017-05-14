@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This is a generic class for DB utilization.
+ * @author alvar
+ */
 public class Conexion {
     
     private String driver;
@@ -22,6 +26,7 @@ public class Conexion {
     
     private Connection conexion;
     
+    // Constructor
     public Conexion() {
         this.driver = "org.postgresql.Driver";
         this.conector = "jdbc:postgresql";
@@ -34,6 +39,7 @@ public class Conexion {
         this.contrasena = "fujireins17";
     }
     
+    // Método para conectar con la BDD
     public void conectar() {
       
         try {
@@ -49,8 +55,9 @@ public class Conexion {
         } finally {
             System.out.println("Conexion establecida con la BDD");
         }
-   }
+    }
     
+    // Método para desconectar con la BDD
     public void desconectar() {
         
         try {
@@ -67,6 +74,13 @@ public class Conexion {
         }
     }
     
+    /**
+     * Generic INSERT into DB method
+     * @param esquema DB schema
+     * @param tabla DB table
+     * @param columnas DB columns
+     * @param valores DB values
+     */
     public void insertar(String esquema, String tabla, String columnas, String valores){
         
         conectar();
@@ -95,6 +109,14 @@ public class Conexion {
         desconectar();
     }
     
+    /**
+     * Generic SELECT into DB method
+     * @param columnas DB columns
+     * @param esquema DB schema
+     * @param tabla DB table
+     * @param condiciones DB WHERE conditions
+     * @return Returns a resultset with the DB data 
+     */
     public ResultSet seleccionar(String columnas, String esquema, String tabla, String condiciones){
         
         conectar();

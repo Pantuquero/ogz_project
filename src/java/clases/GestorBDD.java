@@ -5,8 +5,20 @@ import clases.Usuario;
 import clases.ConversorMD5;
 import java.sql.ResultSet;
 
+
+/**
+ * This class is between Usuario and Conexion class, does all the
+ * transformations to easily work with the object User into the DB.
+ * @author Pantuquero
+ */
 public class GestorBDD {
 
+    /**
+     * Checks the username of the passed Usuario into the DB and returns a
+     * boolean.
+     * @param usuario
+     * @return true -> Username exists in the DB
+     */
     public static boolean comprobarUsuario(Usuario usuario){
         
         try {
@@ -37,7 +49,11 @@ public class GestorBDD {
         return false;
     }
     
-    public static boolean insertarUsuario(Usuario usuario){
+    /**
+     * Inserts the passed Usuario into de DB.
+     * @param usuario
+     */
+    public static void insertarUsuario(Usuario usuario){
         
         try {
             System.out.println("Insertando usuario...");
@@ -51,10 +67,13 @@ public class GestorBDD {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
-        
-        return false;
     }
     
+    /**
+     * Returns a Usuario with the passed username.
+     * @param nombre
+     * @return Usuario
+     */
     public static Usuario recibirUsuario(String nombre){
         Usuario usuario = null;
         
@@ -82,6 +101,11 @@ public class GestorBDD {
         return usuario;
     }
     
+    /**
+     * Validates the passed Usuario against the DB.
+     * @param usuario
+     * @return boolean -> true if the user exists
+     */
     public static boolean validarUsuario(Usuario usuario){
         
         try {

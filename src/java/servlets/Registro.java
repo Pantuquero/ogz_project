@@ -8,13 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import clases.Conexion;
+import clases.ConversorMD5;
 import clases.Usuario;
 import clases.GestorBDD;
 
 
-
+/**
+ * This servlet is called by the login.jsp, inserts a new user into the DB
+ * when requests a registration.
+ * @author Pantuquero
+ */
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
-public class Register extends HttpServlet {
+public class Registro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +37,7 @@ public class Register extends HttpServlet {
         String email = request.getParameter("correoreg");
         String nombre = request.getParameter("nombreusureg");
         String contrasena = request.getParameter("contrasenareg");
-        Usuario usuario_provisional = new Usuario(email, nombre, contrasena);
+        Usuario usuario_provisional = new Usuario(email, nombre, ConversorMD5.convertirMD5(contrasena));
         
         try {
             

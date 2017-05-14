@@ -2,17 +2,28 @@ package clases;
 
 import clases.ConversorMD5;
 
+
+/**
+ * Usuario object
+ * @author Pantuquero
+ */
 public class Usuario {
     
     private String email;
     private String nombre;
     private String contrasena;
     
+    /**
+     * Creates a new Usuario with the cyphrated password.
+     * @param email String
+     * @param nombre String
+     * @param contrasena String
+     */
     public Usuario(String email, String nombre, String contrasena) {
         
         this.email = email;
         this.nombre = nombre;
-        this.contrasena = ConversorMD5.convertirMD5(contrasena);
+        this.contrasena = contrasena;
     }
     
     public String getEmail(){
