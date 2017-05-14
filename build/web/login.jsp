@@ -44,9 +44,11 @@
                 <button id="boton_registro">Register</button>
             </form>
         </div>
+        <!--
         <div class="cta">
             <a href="#">Forgot your password?</a>
         </div>
+        -->
         <div 
             <%
                 // Aquí pinto los mensajes devueltos desde los servlets
