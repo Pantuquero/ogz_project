@@ -6,9 +6,29 @@ $(function () {
             //alert(dateProperties["day"]);
         },
 
-        caldata: codropsEvents}),
-            $month = $('#custom-month').html(cal.getMonthName()),
-            $year = $('#custom-year').html(cal.getYear());
+        caldata: codropsEvents
+    }),
+    $month = $('#custom-month').html(cal.getMonthName()),
+    $year = $('#custom-year').html(cal.getYear());
+    
+    
+    anadirEventos();
+    /**
+     * Función para cargar los eventos de la BDD
+     * @returns {undefined}
+     */
+    function anadirEventos(){
+        cal.setData( {
+            '05-25-2017' : 
+                '<span title="19:30 - 23:00" class="evento" juego="Tabletop simulator">\n\
+                    <b><u>19:30 - 23:00</u></b><br>\n\
+                    <b><i>Tabletop simulator</i></b><br>\n\
+                    @KgsRocks,@Mike\n\
+                </span>'
+        } );
+    }
+    
+    //Botones parte superior derecha
     $('#custom-next').on('click', function () {
         cal.gotoNextMonth(updateMonthYear);
     });
@@ -17,8 +37,29 @@ $(function () {
     });
     $('#custom-current').on('click', function () {
         cal.gotoNow(updateMonthYear);
+        //$.session.set("prueba","no yay");
+        //alert('hola');
+        //alert($.session.get("prueba"));
     });
 
+    // Información del evento seleccionado
+    $('.evento').on('click', function() {
+        //alert($(this).text());
+        alert($(this).attr('juego'));
+        
+        detenerListeners();
+    });
+    
+    /**
+     * Detiene el "Event bubbling" de los listeners
+     * @returns
+     */
+    function detenerListeners() {
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+    }
+    
     function updateMonthYear() {
         $month.html(cal.getMonthName());
         $year.html(cal.getYear());

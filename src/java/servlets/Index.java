@@ -31,6 +31,7 @@ public class Index extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
         
+        /*
         try {
             
             // Compruebo la sesión, si está inactiva devuelvo al login
@@ -48,6 +49,7 @@ public class Index extends HttpServlet {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
+        */
     }
     
     /**

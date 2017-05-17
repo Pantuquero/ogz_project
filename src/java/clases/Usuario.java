@@ -1,6 +1,7 @@
 package clases;
 
 import clases.ConversorMD5;
+import java.util.ArrayList;
 
 
 /**
@@ -12,6 +13,7 @@ public class Usuario {
     private String email;
     private String nombre;
     private String contrasena;
+    private ArrayList<Grupo> grupos;
     
     /**
      * Creates a new Usuario with the cyphrated password.

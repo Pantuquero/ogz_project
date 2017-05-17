@@ -7,12 +7,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<title>Index - OGZ</title>
 
-	<link rel="shortcut icon" href="../favicon.ico"> 
+	<!--<link rel="shortcut icon" href="../favicon.ico"> -->
         
 	<link rel="stylesheet" type="text/css" href="css/calendar.css" />
 	<link rel="stylesheet" type="text/css" href="css/custom_1.css" />
 	
         <script src="js/modernizr.custom.63321.js"></script>
+        
+        <%
+            if(session.getAttribute("usuario") == null){
+                response.sendRedirect("login.jsp");
+            }
+        %>
     </head>
     <body>
 	<div class="container">	

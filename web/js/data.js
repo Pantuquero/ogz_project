@@ -122,7 +122,7 @@ var codropsEvents = {
 	'01-04-2012' : '<a href="http://tympanus.net/codrops/2012/01/04/thumbnail-proximity-effect/">Thumbnail Proximity Effect with jQuery and CSS3</a>',
 	'01-02-2012' : '<a href="http://tympanus.net/codrops/2012/01/02/fullscreen-background-image-slideshow-with-css3/">Fullscreen Background Image Slideshow with CSS3</a>',
 	'12-25-2012' : '<span>Christmas Day</span>',
-        '05-18-2017' : '<span title=""><b><u>17:00 - 18:00</u></b><br><b><i>Dark Souls III</i></b><br>@Mike,@Paski</span>\n\
-                        <span title=""><b><u>18:30 - 21:00</u></b><br><b><i>Heroes of the Storm</i></b><br>@Necros</span>\n\
-                        <span title=""><b><u>19:30 - 23:00</u></b><br><b><i>Tabletop simulator</i></b><br>@KgsRocks,@Mike</span>'
+        '05-18-2017' : '<span title="" class="evento" juego="Dark Souls III"><b><u>17:00 - 18:00</u></b><br><b><i>Dark Souls III</i></b><br>@Mike,@Paski,@Pantuquero</span>\n\
+                        <span title="" class="evento" juego="Heroes of the Storm"><b><u>18:30 - 21:00</u></b><br><b><i>Heroes of the Storm</i></b><br>@Necros</span>\n\
+                        <span title="19:30 - 23:00" class="evento" juego="Tabletop simulator"><b><u>19:30 - 23:00</u></b><br><b><i>Tabletop simulator</i></b><br>@KgsRocks,@Mike</span>'
 };

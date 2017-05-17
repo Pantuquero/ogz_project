@@ -51,8 +51,8 @@ public class Login extends HttpServlet {
                 sesion.setAttribute("usuario", usuario);
                 
                 // Redirijo al main
-                //response.sendRedirect("index.jsp");
-                response.sendRedirect("/orgamingzation/Index");
+                response.sendRedirect("index.jsp");
+                //response.sendRedirect("/orgamingzation/Index");
                 //request.getRequestDispatcher("/Index.java").forward(request, response);
             } else {
                 // Usuario fallido, devuelvo al login con un mensaje de error
