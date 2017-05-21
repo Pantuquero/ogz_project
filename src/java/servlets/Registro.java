@@ -37,7 +37,7 @@ public class Registro extends HttpServlet {
         String email = request.getParameter("correoreg");
         String nombre = request.getParameter("nombreusureg");
         String contrasena = request.getParameter("contrasenareg");
-        Usuario usuario_provisional = new Usuario(email, nombre, ConversorMD5.convertirMD5(contrasena));
+        Usuario usuario_provisional = new Usuario(-1, email, nombre, ConversorMD5.convertirMD5(contrasena), null);
         
         try {
             

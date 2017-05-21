@@ -20,7 +20,7 @@ $(function () {
     function anadirEventos(){
         cal.setData( {
             '05-25-2017' : 
-                '<span title="19:30 - 23:00" class="evento" juego="Tabletop simulator">\n\
+                '<span class="evento" hora="19:30 - 23:00" juego="Tabletop simulator" participantes="@KgsRocks,@Mike">\n\
                     <b><u>19:30 - 23:00</u></b><br>\n\
                     <b><i>Tabletop simulator</i></b><br>\n\
                     @KgsRocks,@Mike\n\
@@ -38,14 +38,14 @@ $(function () {
     $('#custom-current').on('click', function () {
         cal.gotoNow(updateMonthYear);
         //$.session.set("prueba","no yay");
-        //alert('hola');
-        //alert($.session.get("prueba"));
     });
 
     // Información del evento seleccionado
     $('.evento').on('click', function() {
         //alert($(this).text());
-        alert($(this).attr('juego'));
+        alert($(this).attr('hora') + "\n" +
+              $(this).attr('juego') + "\n" +
+              $(this).attr('participantes'));
         
         detenerListeners();
     });

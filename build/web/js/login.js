@@ -61,6 +61,4 @@ function validarRegistro() {
             }
         }
     });
-    
-    comprobarCampos;
 }

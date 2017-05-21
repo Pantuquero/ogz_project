@@ -117,7 +117,7 @@ public class Conexion {
      * @param condiciones DB WHERE conditions
      * @return Returns a resultset with the DB data 
      */
-    public ResultSet seleccionar(String columnas, String esquema, String tabla, String condiciones){
+    public ResultSet seleccionar(String columnas, String tabla, String condiciones){
         
         conectar();
         ResultSet resultado = null;
@@ -132,7 +132,7 @@ public class Conexion {
             }
             
             Statement sentencia = this.conexion.createStatement();
-            String consulta = "SELECT " + columnas + " FROM " + esquema + "." + tabla + condiciones + ";";
+            String consulta = "SELECT " + columnas + " FROM " + tabla + condiciones + ";";
             
             System.out.println("Seleccionando con consulta: <<" + consulta + ">>");
             

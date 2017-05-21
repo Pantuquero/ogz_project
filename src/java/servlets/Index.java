@@ -1,5 +1,6 @@
 package servlets;
 
+import clases.Grupo;
 import clases.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Pantuquero
  */
-@WebServlet(name = "Index", urlPatterns = {"/Index"})
+@WebServlet(name = "index", urlPatterns = {"/index"})
 public class Index extends HttpServlet {
 
     /**
@@ -31,14 +32,50 @@ public class Index extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
         
-        /*
+        comprobarSesion(request, response);
+        
+        HttpSession sesion = (HttpSession) request.getSession();
+        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+        
+        // Recojo los botones para saber cual se ha pulsado
+        String unirseGrupo = request.getParameter("unirse_grupo");
+        String crearGrupo = request.getParameter("crear_grupo");
+        String abandonarGrupo = request.getParameter("abandonar_grupo");
+        
+        if(unirseGrupo != null) {
+            //unirAgrupo();
+        } else if(crearGrupo != null) {
+            
+        } else if(abandonarGrupo != null) {
+            
+        }
+    }
+    
+    private void unirAgrupo(Usuario usuario, Grupo grupo){
+        System.out.println("Uniendo usuario a grupo...");
+    }
+    
+    private void crearGrupo(){
+        
+    }
+    
+    private void abandonarGrupo(){
+        
+    }
+    
+    /**
+     * To validate the session
+     * @param request
+     * @param response 
+     */
+    protected void comprobarSesion(HttpServletRequest request, HttpServletResponse response){
+        
+        HttpSession sesion = (HttpSession) request.getSession();
+        Usuario usuario =  (Usuario) sesion.getAttribute("usuario");
+        
         try {
             
-            // Compruebo la sesión, si está inactiva devuelvo al login
-            if(comprobarSesion(request)) {
-                
-                response.sendRedirect("index.jsp");
-            } else {
+            if(usuario == null) {
                 
                 request.setAttribute("mensaje", "Your session has expired.");
                 request.setAttribute("tipo_mensaje","false");
@@ -49,27 +86,6 @@ public class Index extends HttpServlet {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
-        */
-    }
-    
-    /**
-     * Comprueba que la sesión está inicializada buscando el usuario.
-     * @param request
-     * @return boolean true -> si la sesión es correcta
-     */
-    private boolean comprobarSesion(HttpServletRequest request){
-        System.out.println("Comprobando usuario...");
-        
-        HttpSession sesion = (HttpSession) request.getSession();
-        Usuario usuario =  (Usuario) sesion.getAttribute("usuario");
-        
-        //System.out.println(usuario.getNombre() + " " + usuario.getEmail() + " " + usuario.getContrasena());
-        
-        if(usuario.getNombre() != null){
-            return true;
-        }
-        
-        return false;
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

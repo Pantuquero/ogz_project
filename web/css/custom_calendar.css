@@ -255,14 +255,15 @@ body {
 	color: rgba(255,255,255,0.7);
 	font-size: 15px;
 	/*text-transform: uppercase;*/
-	display: inline-block;
+	display: block;
 	padding: 3px 5px;
 	border-radius: 3px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 100%;
-	margin-bottom: 1px;
+        margin-top: 4px;
+	margin-bottom: 4px;
         margin-left: px;
         margin-right: px;
 	background: rgba(255,255,255,0.1);
@@ -272,7 +273,7 @@ body {
 	background: rgba(255,255,255,0.3);
 }
 
-@media screen and (max-width: 880px) , screen and (max-height: 450px) {
+@media screen and (max-width: 999999px) , screen and (max-height: 450px) {
 	html, body, .container {
 		height: auto;
 	}

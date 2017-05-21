@@ -4,6 +4,8 @@ import clases.Conexion;
 import clases.Usuario;
 import clases.ConversorMD5;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -26,8 +28,11 @@ public class GestorBDD {
             
             Conexion conexion = new Conexion();
             
-            int contador = 0;            
-            ResultSet resultado = conexion.seleccionar("*","predeterminado", "usuarios", "nombre = '" + usuario.getNombre() + "'");
+            int contador = 0;
+            String columnas = "*";
+            String tablas = "predeterminado.usuarios";
+            String condiciones = "nombre = '" + usuario.getNombre() + "'";
+            ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
                         
             while (resultado.next()){
                 contador++;
@@ -60,7 +65,11 @@ public class GestorBDD {
             
             Conexion conexion = new Conexion();
             
-            conexion.insertar("predeterminado", "usuarios", "email, nombre, contrasena", "'" + usuario.getEmail() + "','" + usuario.getNombre() + "','" + usuario.getContrasena() + "'");
+            String esquema = "predeterminado";
+            String tabla = "usuarios";
+            String columnas = "email, nombre, contrasena";
+            String valores = "'" + usuario.getEmail() + "','" + usuario.getNombre() + "','" + usuario.getContrasena() + "'";
+            conexion.insertar(esquema, tabla, columnas, valores);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,17 +90,33 @@ public class GestorBDD {
             System.out.println("Recibiendo usuario...");
             
             Conexion conexion = new Conexion();
+            int identificador = -1;
+            String email = null;
+            String contrasena = null;
+            ArrayList<Grupo> grupos = null;
+            ResultSet resultado = null;
             
-            int contador = 0;            
-            ResultSet resultado = conexion.seleccionar("email, nombre, contrasena","predeterminado", "usuarios", "nombre = '" + nombre + "'");
-                        
-            if(resultado.next() == false){
-                return usuario;
-            }
-            usuario = new Usuario(resultado.getString("email"),resultado.getString("nombre"),resultado.getString("contrasena"));
+            String columnas = "id, email, nombre, contrasena";
+            String tablas = "predeterminado.usuarios";
+            String condiciones = "nombre = '" + nombre + "'";
+            resultado = conexion.seleccionar(columnas, tablas, condiciones);            
+            resultado.next();
+            
+            identificador = resultado.getInt("id");
+            email = resultado.getString("email");
+            nombre = resultado.getString("nombre");
+            contrasena = resultado.getString("contrasena");
             resultado.close();
             
-            return usuario;
+            Usuario usuario_provisional = new Usuario(identificador, email, nombre, contrasena, grupos);
+            grupos = recibirGruposUsuario(usuario_provisional);
+            
+            usuario = new Usuario(identificador, email, nombre, contrasena, grupos);
+            
+            /*
+            usuario = new Usuario(resultado.getString("email"),resultado.getString("nombre"),resultado.getString("contrasena"));
+            resultado.close();
+            */
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
@@ -99,6 +124,108 @@ public class GestorBDD {
         }
         
         return usuario;
+    }
+    
+    public static ArrayList<Grupo> recibirGruposUsuario(Usuario usuario){
+        Conexion conexion = new Conexion();
+        ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+        
+        try {
+            System.out.println("Recibiendo grupos del usuario...");
+            
+            String columnas = "grupos.id, grupos.nombre";
+            String tablas = "predeterminado.grupos INNER JOIN predeterminado.grupo_usuario ON (grupos.id = grupo_usuario.id_grupo)";
+            String condiciones = "grupo_usuario.id_usuario = " + usuario.getIdentificador();
+            ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
+            while (resultado.next()){
+                
+                int identificador = resultado.getInt("id");
+                String nombre = resultado.getString("nombre");
+                
+                Grupo grupo_provisional = new Grupo(identificador, nombre, null);
+                ArrayList<Evento> eventos = recibirEventosGrupo(grupo_provisional);
+                
+                Grupo grupo = new Grupo(identificador, nombre, eventos);
+                
+                grupos.add(grupo);
+            }
+            
+            resultado.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return grupos;
+    }
+    
+    public static ArrayList<Evento> recibirEventosGrupo(Grupo grupo){
+        Conexion conexion = new Conexion();
+        ArrayList<Evento> eventos = new ArrayList<Evento>();
+        
+        try {
+            System.out.println("Recibiendo eventos del grupo...");
+            
+            String columnas = "id, fecha_inicio, fecha_fin, (SELECT nombre FROM juegos WHERE juegos.id = id_juego) AS juego";
+            String tablas = "predeterminado.eventos";
+            String condiciones = "id_grupo = " + grupo.getIdentificador();
+            ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
+            
+            while(resultado.next()){
+                
+                int identificador = resultado.getInt("id");
+                Calendar fecha_inicio = Calendar.getInstance();
+                    fecha_inicio.setTime(resultado.getDate("fecha_inicio"));
+                Calendar fecha_fin = Calendar.getInstance();
+                    fecha_fin.setTime(resultado.getDate("fecha_fin"));
+                String juego = resultado.getString("juego");
+                
+                Evento evento_provisional = new Evento(identificador, fecha_inicio, fecha_fin, juego, null);
+                ArrayList<String> asistentes = recibirAsistentesEvento(evento_provisional);
+                
+                Evento evento = new Evento(identificador, fecha_inicio, fecha_fin, juego, asistentes);
+                
+                eventos.add(evento);
+            }
+            
+            resultado.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return eventos;
+    }
+    
+    public static ArrayList<String> recibirAsistentesEvento(Evento evento){
+        Conexion conexion = new Conexion();
+        ArrayList<String> asistentes = new ArrayList<String>();
+        
+        try{
+            System.out.println("Recibiendo asistentes de evento...");
+            
+            String columnas = "usuarios.nombre";
+            String tabla = "predeterminado.usuarios INNER JOIN predeterminado.evento_usuario ON (usuarios.id = evento_usuario.id_usuario)";
+            String condiciones = "evento_usuario.id_evento = " + evento.getIdentificador();
+            ResultSet resultado = conexion.seleccionar(columnas, tabla, condiciones);
+            
+            while(resultado.next()){
+                asistentes.add(resultado.getString("nombre"));
+            }
+            
+            resultado.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return asistentes;
     }
     
     /**
@@ -112,9 +239,12 @@ public class GestorBDD {
             System.out.println("Logueando usuario...");
             
             Conexion conexion = new Conexion();
+            int contador = 0;
             
-            int contador = 0;            
-            ResultSet resultado = conexion.seleccionar("*","predeterminado", "usuarios", "nombre = '" + usuario.getNombre() + "' AND contrasena = '" + usuario.getContrasena() + "'");
+            String columnas = "*";
+            String tablas = "predeterminado.usuarios";
+            String condiciones = "nombre = '" + usuario.getNombre() + "' AND contrasena = '" + usuario.getContrasena() + "'";
+            ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
                         
             while (resultado.next()){
                 contador++;

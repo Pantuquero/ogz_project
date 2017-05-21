@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Usuario {
     
+    private int identificador;
     private String email;
     private String nombre;
     private String contrasena;
@@ -21,11 +22,16 @@ public class Usuario {
      * @param nombre String
      * @param contrasena String
      */
-    public Usuario(String email, String nombre, String contrasena) {
-        
+    public Usuario(int identificador, String email, String nombre, String contrasena, ArrayList<Grupo> grupos) {
+        this.identificador = identificador;
         this.email = email;
         this.nombre = nombre;
         this.contrasena = contrasena;
+        this.grupos = grupos;
+    }
+    
+    public int getIdentificador(){
+        return this.identificador;
     }
     
     public String getEmail(){

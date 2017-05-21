@@ -1,0 +1,64 @@
+/* DROPDOWN */
+.select-style {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 200px;
+    height: 30px;
+    border-radius: 3px;
+    overflow: hidden;
+    /*background-color: #5900b3;*/
+    background: rgba(255,255,255,0.3);
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.select-style option {
+    background-color: #6D4891;
+}
+
+.select-style select {
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: #fff;
+    background-image: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+#selector {
+    background-color: #481A76;
+    padding: 8px;
+    border-radius: 5px;
+    width: 216px;
+}
+
+/* BOTONES */
+.boton {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 50px;
+    height: 30px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.3);
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.boton:hover {
+    background-color: #9980B3;
+}
+
+.entrada_texto {
+    width: 145px;
+    height: 28px;
+}

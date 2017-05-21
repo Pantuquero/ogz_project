@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
         Conexion conexion = new Conexion();
         String nombre = request.getParameter("nombreusu");
         String contrasena = request.getParameter("contrasena");
-        Usuario usuario_provisional = new Usuario("nomail", nombre, ConversorMD5.convertirMD5(contrasena));
+        Usuario usuario_provisional = new Usuario(-1, "nomail", nombre, ConversorMD5.convertirMD5(contrasena), null);
         
         try {
             boolean validacion_usuario = GestorBDD.validarUsuario(usuario_provisional);
