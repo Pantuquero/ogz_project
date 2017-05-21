@@ -4,10 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/clases/Grupo.java</file>
+            <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/jquery.validate.js</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/index.jsp</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/style.js</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/jquery.calendario.js</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/servlets/Registro.java</file>
+            <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/index.js</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/servlets/Index.java</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/css/demo.css</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/calendario.js</file>
@@ -18,6 +20,7 @@
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/dropdown.js</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/clases/Evento.java</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/js/data.js</file>
+            <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/clases/Conexion.java</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/css/login.min.css</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/src/java/servlets/Login.java</file>
             <file>file:/C:/Users/alvar/Documents/ogz_project/web/css/login.css</file>

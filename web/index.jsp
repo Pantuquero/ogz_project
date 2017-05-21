@@ -1,3 +1,7 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="clases.Grupo"%>
+<%@page import="clases.Usuario"%>
+
 <!DOCTYPE html>
 <!--[if IE 9]><html class="no-js ie9"><![endif]-->
 <!--[if gt IE 9]><!--><html class="no-js"><!--<![endif]-->
@@ -46,12 +50,29 @@
                         <form id="formulario_grupos" action="index" method="post">
                             <br>
                             <select class="select-style" name="select_grupos">
-                                <option name="1385">(#1385) - Origin</option>
-                                <option>(#0386) - Palpatine</option>
-                                <option>(#5592) - Tango</option>
-                                <option>(#0003) - Fleur</option>
-                                <option>(#8843) - Faggets</option>
-                                <option>(#6969) - Rokotombo</option>
+                                <%
+                                    //Relleno la lista de grupos del usuario
+                                    try {
+                                        HttpSession sesion = request.getSession();
+                                        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+                                        ArrayList<Grupo> grupos =  null;
+                                        
+                                        if(usuario.getGrupos().size() != 0){
+                                            for(int i=0; i<=grupos.size(); i++){
+                                                int codigo = grupos.get(i).getIdentificador();
+                                                String nombre = grupos.get(i).getNombre();
+                                                String codigo_formateado = String.format("%04d", codigo);
+
+                                                out.println("<option>(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                            }
+                                        }
+                                        
+                                    } catch(Exception e) {
+                                        e.printStackTrace();
+                                        System.err.println(e.getClass().getName()+": "+e.getMessage());
+                                        System.exit(0);
+                                    }
+                                %>
                             </select>
                             <br>
                             <input type="text" class="entrada_texto" name="entrada_texto">  <button class="boton" id="unirse_grupo" type="input" title="Join this team!">Join</button>

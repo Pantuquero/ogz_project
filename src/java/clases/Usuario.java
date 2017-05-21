@@ -16,12 +16,7 @@ public class Usuario {
     private String contrasena;
     private ArrayList<Grupo> grupos;
     
-    /**
-     * Creates a new Usuario with the cyphrated password.
-     * @param email String
-     * @param nombre String
-     * @param contrasena String
-     */
+    
     public Usuario(int identificador, String email, String nombre, String contrasena, ArrayList<Grupo> grupos) {
         this.identificador = identificador;
         this.email = email;
@@ -44,5 +39,9 @@ public class Usuario {
     
     public String getContrasena(){
         return this.contrasena;
+    }
+    
+    public ArrayList<Grupo> getGrupos(){
+        return this.grupos;
     }
 }
