@@ -31,7 +31,7 @@ public class GestorBDD {
             int contador = 0;
             String columnas = "*";
             String tablas = "predeterminado.usuarios";
-            String condiciones = "nombre = '" + usuario.getNombre() + "'";
+            String condiciones = "nombre = '" + usuario.getNombre() + "' OR email = '" + usuario.getEmail() + "'";
             ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
                         
             while (resultado.next()){

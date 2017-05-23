@@ -41,10 +41,11 @@ public class Registro extends HttpServlet {
         
         try {
             
-            if(GestorBDD.validarUsuario(usuario_provisional)){
+            if(GestorBDD.comprobarUsuario(usuario_provisional)){
                 request.setAttribute("mensaje", "This user already exists!");
                 request.setAttribute("tipo_mensaje","false");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
             }
             
             System.out.println("Registrando usuario...");
