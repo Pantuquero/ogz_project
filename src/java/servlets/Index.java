@@ -1,5 +1,6 @@
 package servlets;
 
+import clases.GestorBDD;
 import clases.Grupo;
 import clases.Usuario;
 import java.io.IOException;
@@ -32,31 +33,53 @@ public class Index extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
         
-        comprobarSesion(request, response);
+        try {
+            comprobarSesion(request, response);
         
-        HttpSession sesion = (HttpSession) request.getSession();
-        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-        
-        // Recojo los botones para saber cual se ha pulsado
-        String unirseGrupo = request.getParameter("unirse_grupo");
-        String crearGrupo = request.getParameter("crear_grupo");
-        String abandonarGrupo = request.getParameter("abandonar_grupo");
-        
-        if(unirseGrupo != null) {
-            //unirAgrupo();
-        } else if(crearGrupo != null) {
-            
-        } else if(abandonarGrupo != null) {
-            
+            HttpSession sesion = (HttpSession) request.getSession();
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+
+            // Recojo los botones para saber cual se ha pulsado
+            String unirseGrupo = request.getParameter("unirse_grupo");
+            String crearGrupo = request.getParameter("crear_grupo");
+            String abandonarGrupo = request.getParameter("abandonar_grupo");        
+
+            if(unirseGrupo != null) {
+                unirAgrupo();
+            } else if(crearGrupo != null) {
+
+                String nombre_grupo = request.getParameter("entrada_texto");
+                crearGrupo(nombre_grupo, usuario);
+
+                sesion.setAttribute("usuario", usuario);
+                response.sendRedirect("index.jsp");
+
+            } else if(abandonarGrupo != null) {
+                abandonarGrupo();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
         }
     }
     
-    private void unirAgrupo(Usuario usuario, Grupo grupo){
+    private void unirAgrupo(){
         System.out.println("Uniendo usuario a grupo...");
     }
     
-    private void crearGrupo(){
+    private Usuario crearGrupo(String nombre_grupo, Usuario usuario){        
         
+        //Inserto el grupo en la BDD
+        Grupo grupo = GestorBDD.insertarGrupo(nombre_grupo);
+        
+        //Inserto la relación
+        GestorBDD.asignarGrupoAusuario(grupo, usuario);
+        
+        //Asigno el grupo al usuario
+        usuario.asignarGrupo(grupo);
+        
+        return usuario;
     }
     
     private void abandonarGrupo(){

@@ -75,15 +75,16 @@ public class Conexion {
     }
     
     /**
-     * Generic INSERT into DB method
+     * Generic INSERT into DB method, returns the ID of the inserted row.
      * @param esquema DB schema
      * @param tabla DB table
      * @param columnas DB columns
      * @param valores DB values
      */
-    public void insertar(String esquema, String tabla, String columnas, String valores){
+    public int insertar(String esquema, String tabla, String columnas, String valores){
         
         conectar();
+        int id = -1;
         
         try {
             System.out.println("Preparando insercion...");
@@ -94,7 +95,14 @@ public class Conexion {
             
             System.out.println("Insertando con consulta: <<" + consulta + ">>");
             
-            sentencia.executeUpdate(consulta);
+            sentencia.executeUpdate(consulta, sentencia.RETURN_GENERATED_KEYS);
+            
+            //Recojo la id generada por la consulta
+            ResultSet resultado = sentencia.getGeneratedKeys();
+            if(resultado.next()){
+                id = resultado.getInt(1);
+            }
+            
             sentencia.close();
             //this.conexion.commit();
             
@@ -107,6 +115,7 @@ public class Conexion {
         }
         
         desconectar();
+        return id;
     }
     
     /**

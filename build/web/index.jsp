@@ -53,12 +53,14 @@
                                 <%
                                     //Relleno la lista de grupos del usuario
                                     try {
+                                        ArrayList<Grupo> grupos =  new ArrayList<Grupo>();
+                                        
                                         HttpSession sesion = request.getSession();
                                         Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-                                        ArrayList<Grupo> grupos =  null;
+                                        grupos = usuario.getGrupos();
                                         
                                         if(usuario.getGrupos().size() != 0){
-                                            for(int i=0; i<=grupos.size(); i++){
+                                            for(int i=0; i<grupos.size(); i++){
                                                 int codigo = grupos.get(i).getIdentificador();
                                                 String nombre = grupos.get(i).getNombre();
                                                 String codigo_formateado = String.format("%04d", codigo);

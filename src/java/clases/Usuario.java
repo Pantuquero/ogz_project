@@ -44,4 +44,8 @@ public class Usuario {
     public ArrayList<Grupo> getGrupos(){
         return this.grupos;
     }
+    
+    public void asignarGrupo(Grupo grupo){
+        this.grupos.add(grupo);
+    }
 }

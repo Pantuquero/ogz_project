@@ -93,7 +93,7 @@ public class GestorBDD {
             int identificador = -1;
             String email = null;
             String contrasena = null;
-            ArrayList<Grupo> grupos = null;
+            ArrayList<Grupo> grupos = new ArrayList();
             ResultSet resultado = null;
             
             String columnas = "id, email, nombre, contrasena";
@@ -137,13 +137,15 @@ public class GestorBDD {
             String tablas = "predeterminado.grupos INNER JOIN predeterminado.grupo_usuario ON (grupos.id = grupo_usuario.id_grupo)";
             String condiciones = "grupo_usuario.id_usuario = " + usuario.getIdentificador();
             ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
+            
             while (resultado.next()){
                 
                 int identificador = resultado.getInt("id");
                 String nombre = resultado.getString("nombre");
                 
-                Grupo grupo_provisional = new Grupo(identificador, nombre, null);
-                ArrayList<Evento> eventos = recibirEventosGrupo(grupo_provisional);
+                ArrayList<Evento> eventos = new ArrayList<Evento>();
+                Grupo grupo_provisional = new Grupo(identificador, nombre, eventos);
+                eventos = recibirEventosGrupo(grupo_provisional);
                 
                 Grupo grupo = new Grupo(identificador, nombre, eventos);
                 
@@ -168,7 +170,7 @@ public class GestorBDD {
         try {
             System.out.println("Recibiendo eventos del grupo...");
             
-            String columnas = "id, fecha_inicio, fecha_fin, (SELECT nombre FROM juegos WHERE juegos.id = id_juego) AS juego";
+            String columnas = "id, fecha_inicio, fecha_fin, (SELECT nombre FROM predeterminado.juegos WHERE juegos.id = id_juego) AS juego";
             String tablas = "predeterminado.eventos";
             String condiciones = "id_grupo = " + grupo.getIdentificador();
             ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
@@ -182,14 +184,14 @@ public class GestorBDD {
                     fecha_fin.setTime(resultado.getDate("fecha_fin"));
                 String juego = resultado.getString("juego");
                 
-                Evento evento_provisional = new Evento(identificador, fecha_inicio, fecha_fin, juego, null);
-                ArrayList<String> asistentes = recibirAsistentesEvento(evento_provisional);
+                ArrayList<String> asistentes = new ArrayList<String>();
+                Evento evento_provisional = new Evento(identificador, fecha_inicio, fecha_fin, juego, asistentes);
+                asistentes = recibirAsistentesEvento(evento_provisional);
                 
                 Evento evento = new Evento(identificador, fecha_inicio, fecha_fin, juego, asistentes);
                 
                 eventos.add(evento);
             }
-            
             resultado.close();
             
         } catch (Exception e) {
@@ -265,6 +267,60 @@ public class GestorBDD {
         
         return false;
         
+    }
+    
+    /**
+     * Inserts a group with the passed name and retrieves a group with it's ID.
+     * @param grupo
+     * @return 
+     */
+    public static Grupo insertarGrupo(String nombre){
+        Conexion conexion = new Conexion();
+        Grupo grupo = null;
+        
+        try {
+            System.out.println("Creando grupo...");
+            
+            //Creo el grupo
+            String esquema = "predeterminado";
+            String tabla = "grupos";
+            String columnas = "nombre";
+            String valores = "'" + nombre + "'";
+            int id = conexion.insertar(esquema, tabla, columnas, valores);
+            
+            ArrayList<Evento> eventos = new ArrayList<Evento>();
+            grupo = new Grupo(id, nombre, eventos);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return grupo;
+    }
+    
+    public static boolean asignarGrupoAusuario(Grupo grupo, Usuario usuario){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Asignando grupo " + grupo.getNombre() + " a usuario " + usuario.getNombre());
+            
+            String esquema = "predeterminado";
+            String tabla = "grupo_usuario";
+            String columnas = "id_grupo, id_usuario";
+            String valores = "'" + grupo.getIdentificador() + "','" + usuario.getIdentificador() + "'";
+            conexion.insertar(esquema, tabla, columnas, valores);
+            
+            return true;
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return false;
     }
     
     /*
