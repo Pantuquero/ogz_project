@@ -162,6 +162,31 @@ public class Conexion {
         return resultado;
     }
     
+    public void eliminar(String tabla, String condiciones){
+        conectar();
+        
+        try {
+            System.out.println("Preparando borrado...");
+            
+            Statement sentencia = this.conexion.createStatement();
+            String consulta = "DELETE FROM " + tabla + " WHERE " + condiciones + ";";
+            
+            System.out.println("Eliminando con consulta: <<" + consulta + ">>");
+            
+            sentencia.executeUpdate(consulta);
+            sentencia.close();
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }finally {
+            System.out.println("Seleccion completada, devolviendo datos...");
+        }
+        
+        desconectar();
+    }
+    
     
     /*
     public static void main (String[] args){

@@ -55,7 +55,18 @@ public class Index extends HttpServlet {
                 response.sendRedirect("index.jsp");
 
             } else if(abandonarGrupo != null) {
-                abandonarGrupo();
+                
+                if(request.getParameter("select_grupos") == null){
+                    return;
+                }  
+                
+                String cadena_id_grupo = request.getParameter("select_grupos");              
+                int id_grupo = Integer.parseInt(cadena_id_grupo);
+                
+                usuario = abandonarGrupo(id_grupo, usuario);
+                
+                sesion.setAttribute("usuario", usuario);
+                response.sendRedirect("index.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,8 +93,23 @@ public class Index extends HttpServlet {
         return usuario;
     }
     
-    private void abandonarGrupo(){
+    private Usuario abandonarGrupo(int id_grupo, Usuario usuario){
+        Grupo grupo = null;
         
+        for(int i=0; i<=usuario.getGrupos().size(); i++){
+            if(usuario.getGrupos().get(i).getIdentificador() == id_grupo){
+                grupo = usuario.getGrupos().get(i);
+                break;
+            }
+        }
+        
+        if(grupo != null){
+            GestorBDD.desasignarGrupoAusuario(grupo, usuario);
+            
+            usuario.desasignarGrupo(grupo);
+        }
+        
+        return usuario;
     }
     
     /**

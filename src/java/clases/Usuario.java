@@ -48,4 +48,8 @@ public class Usuario {
     public void asignarGrupo(Grupo grupo){
         this.grupos.add(grupo);
     }
+    
+    public void desasignarGrupo(Grupo grupo){
+        this.grupos.remove(grupo);
+    }
 }

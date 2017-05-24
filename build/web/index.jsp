@@ -65,7 +65,7 @@
                                                 String nombre = grupos.get(i).getNombre();
                                                 String codigo_formateado = String.format("%04d", codigo);
 
-                                                out.println("<option>(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                out.println("<option value=\"" + codigo_formateado + "\">(#" + codigo_formateado + ") - " + nombre + "</option>");
                                             }
                                         }
                                         

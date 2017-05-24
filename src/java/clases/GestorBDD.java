@@ -323,6 +323,27 @@ public class GestorBDD {
         return false;
     }
     
+    public static boolean desasignarGrupoAusuario(Grupo grupo, Usuario usuario){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Eliminando grupo " + grupo.getNombre() + " de usuario " + usuario.getNombre());
+            
+            String tabla = "predeterminado.grupo_usuario";
+            String condiciones = "id_grupo = " + grupo.getIdentificador() + " AND id_usuario = " + usuario.getIdentificador();
+            conexion.eliminar(tabla, condiciones);
+            
+            return true;
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return false;
+    }
+    
     /*
     public static void main (String args[]){
         Usuario usuario = new Usuario("prueba@mail.com","prueba","pruebaprueba");

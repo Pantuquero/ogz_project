@@ -18,6 +18,7 @@
         HttpSession sesion = request.getSession();
         if(sesion != null){
             sesion.invalidate();
+            //sesion.setAttribute("usuario", "-1");
         }
     %>
 </head>
