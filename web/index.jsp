@@ -47,7 +47,11 @@
                 <div class="custom-header clearfix">
                     <h2>Orgamingzation</h2>
                     <br>
-                    <div id="selector">
+                    <div class="menu_discreto">
+                        <label id="recargar">Reload</label> | <label id="salir">Logout</label>
+                    </div>
+                    <br>
+                    <div id="equipos">
                         <h3>Teams</h3>
                         <form id="formulario_grupos" action="index" method="post">
                             <br>

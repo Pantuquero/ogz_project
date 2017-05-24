@@ -33,7 +33,15 @@
     outline: none;
 }
 
-#selector {
+.menu_discreto {
+    color: #BEB1CB;
+}
+
+.menu_discreto label {
+    cursor: pointer;
+}
+
+#equipos {
     background-color: #481A76;
     padding: 8px;
     border-radius: 5px;
