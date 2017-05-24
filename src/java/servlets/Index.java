@@ -1,10 +1,12 @@
 package servlets;
 
+import clases.Evento;
 import clases.GestorBDD;
 import clases.Grupo;
 import clases.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -35,7 +37,7 @@ public class Index extends HttpServlet {
         
         try {
             comprobarSesion(request, response);
-        
+            
             HttpSession sesion = (HttpSession) request.getSession();
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
 
@@ -43,17 +45,26 @@ public class Index extends HttpServlet {
             String unirseGrupo = request.getParameter("unirse_grupo");
             String crearGrupo = request.getParameter("crear_grupo");
             String abandonarGrupo = request.getParameter("abandonar_grupo");        
-
+            System.out.println(unirseGrupo);
+            // SOLICITUD DE UNION A GRUPO
             if(unirseGrupo != null) {
-                unirAgrupo();
+                
+                String cadena_id_grupo = request.getParameter("entrada_texto");
+                int id_grupo = Integer.parseInt(cadena_id_grupo);
+                
+                usuario = unirAgrupo(id_grupo, usuario);
+                
+                sesion.setAttribute("usuario", usuario);
+                
+            // SOLICITUD DE GREACION DE GRUPO
             } else if(crearGrupo != null) {
 
                 String nombre_grupo = request.getParameter("entrada_texto");
                 crearGrupo(nombre_grupo, usuario);
 
                 sesion.setAttribute("usuario", usuario);
-                response.sendRedirect("index.jsp");
 
+            // SOLICITUD DE ABANDONO DE GRUPO
             } else if(abandonarGrupo != null) {
                 
                 if(request.getParameter("select_grupos") == null){
@@ -66,8 +77,10 @@ public class Index extends HttpServlet {
                 usuario = abandonarGrupo(id_grupo, usuario);
                 
                 sesion.setAttribute("usuario", usuario);
-                response.sendRedirect("index.jsp");
+                
             }
+            
+            response.sendRedirect("index.jsp");
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
@@ -75,11 +88,24 @@ public class Index extends HttpServlet {
         }
     }
     
-    private void unirAgrupo(){
+    private Usuario unirAgrupo( int id_grupo, Usuario usuario){
         System.out.println("Uniendo usuario a grupo...");
+        
+        ArrayList<Evento> eventos = new ArrayList<Evento>();
+        Grupo grupo_provisional = new Grupo(id_grupo, "noname", eventos);
+        
+        // Inserto la relación
+        GestorBDD.asignarGrupoAusuario(grupo_provisional, usuario);
+        
+        //Recargo los grupos del usuario en el usuario
+        ArrayList<Grupo> grupos = GestorBDD.recibirGruposUsuario(usuario);
+        usuario.setGrupos(grupos);
+        
+        return usuario;
     }
     
-    private Usuario crearGrupo(String nombre_grupo, Usuario usuario){        
+    private Usuario crearGrupo(String nombre_grupo, Usuario usuario){
+        System.out.println("Creando grupo...");
         
         //Inserto el grupo en la BDD
         Grupo grupo = GestorBDD.insertarGrupo(nombre_grupo);
@@ -94,8 +120,11 @@ public class Index extends HttpServlet {
     }
     
     private Usuario abandonarGrupo(int id_grupo, Usuario usuario){
+        System.out.println("Abandonando grupo...");
+        
         Grupo grupo = null;
         
+        // Recorro los grupos del usuario para coger su grupo
         for(int i=0; i<=usuario.getGrupos().size(); i++){
             if(usuario.getGrupos().get(i).getIdentificador() == id_grupo){
                 grupo = usuario.getGrupos().get(i);

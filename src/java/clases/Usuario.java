@@ -52,4 +52,8 @@ public class Usuario {
     public void desasignarGrupo(Grupo grupo){
         this.grupos.remove(grupo);
     }
+    
+    public void setGrupos(ArrayList<Grupo> grupos){
+        this.grupos = grupos;
+    }
 }

@@ -77,7 +77,7 @@
                                 %>
                             </select>
                             <br>
-                            <input type="text" class="entrada_texto" name="entrada_texto">  <button class="boton" id="unirse_grupo" type="input" title="Join this team!">Join</button>
+                            <input type="text" class="entrada_texto" name="entrada_texto">  <button class="boton" id="unirse_grupo" name="unirse_grupo" type="input" title="Join this team!">Join</button>
                             <button class="boton" id="crear_grupo" type="input" name="crear_grupo" title="New team">New</button>
                             <button class="boton" id="abandonar_grupo" type="input" name="abandonar_grupo" title="Leave current team">Leave</button>
                             <br>

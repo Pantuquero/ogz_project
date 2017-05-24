@@ -304,15 +304,24 @@ public class GestorBDD {
         Conexion conexion = new Conexion();
         
         try {
-            System.out.println("Asignando grupo " + grupo.getNombre() + " a usuario " + usuario.getNombre());
+            System.out.println("Asignando grupo " + grupo.getIdentificador() + " a usuario " + usuario.getNombre());
             
-            String esquema = "predeterminado";
-            String tabla = "grupo_usuario";
-            String columnas = "id_grupo, id_usuario";
-            String valores = "'" + grupo.getIdentificador() + "','" + usuario.getIdentificador() + "'";
-            conexion.insertar(esquema, tabla, columnas, valores);
+            // Compruebo que existe el grupo en la BDD
+            String columnas = "id";
+            String tabla = "predeterminado.grupos";
+            String condiciones = "id = " + grupo.getIdentificador();
+            ResultSet resultado = conexion.seleccionar(columnas, tabla, condiciones);
             
-            return true;
+            if(resultado.next()){
+                String esquema = "predeterminado";
+                String tabla_insercion = "grupo_usuario";
+                String columnas_insercion = "id_grupo, id_usuario";
+                String valores = "'" + grupo.getIdentificador() + "','" + usuario.getIdentificador() + "'";
+                conexion.insertar(esquema, tabla_insercion, columnas_insercion, valores);
+
+                resultado.close();
+                return true;
+            }
             
         }catch(Exception e){
             e.printStackTrace();
