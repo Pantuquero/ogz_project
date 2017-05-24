@@ -15,6 +15,7 @@
     
     <%
         //Si existe una sesión cuando accedes al login la elimino
+        
         HttpSession sesion = request.getSession();
         if(sesion != null){
             sesion.invalidate();

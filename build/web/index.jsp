@@ -19,13 +19,15 @@
 	
         <script src="js/modernizr.custom.63321.js"></script>
         
-        <%
+        <% 
             // Control de la sesión activa
             if(session.getAttribute("usuario") == null){
                 //response.sendRedirect("login.jsp");
                 request.setAttribute("mensaje", "Your session has expired");
                 request.setAttribute("tipo_mensaje","false");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+                
+                return;
             }
         %>
     </head>
