@@ -353,6 +353,33 @@ public class GestorBDD {
         return false;
     }
     
+    public static ArrayList<String> recibirJuegos(){
+        Conexion conexion = new Conexion();
+        ArrayList<String> juegos = new ArrayList<String>();
+        
+        try{
+            System.out.println("Recibiendo lista de juegos...");
+            
+            String columnas = "nombre";
+            String tabla = "predeterminado.juegos";
+            String condiciones = "*";
+            ResultSet resultado = conexion.seleccionar(columnas, tabla, condiciones);
+            
+            while(resultado.next()){
+                juegos.add(resultado.getString("nombre"));
+            }
+            
+            resultado.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return juegos;
+    }
+    
     /*
     public static void main (String args[]){
         Usuario usuario = new Usuario("prueba@mail.com","prueba","pruebaprueba");

@@ -135,7 +135,7 @@ public class Conexion {
             System.out.println("Preparando seleccion...");
             
             if(condiciones == "*"){
-                condiciones = " WHERE 1 = 1";
+                condiciones = "";
             } else {
                 condiciones = " WHERE " + condiciones;
             }

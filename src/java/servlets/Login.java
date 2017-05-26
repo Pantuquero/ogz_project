@@ -11,6 +11,7 @@ import clases.Conexion;
 import clases.ConversorMD5;
 import clases.Usuario;
 import clases.GestorBDD;
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 
@@ -48,7 +49,9 @@ public class Login extends HttpServlet {
                 HttpSession sesion = request.getSession(true);
                 sesion.setMaxInactiveInterval(600); //10 min de sesion
                 Usuario usuario = GestorBDD.recibirUsuario(usuario_provisional.getNombre());
+                ArrayList<String> juegos = GestorBDD.recibirJuegos();
                 sesion.setAttribute("usuario", usuario);
+                sesion.setAttribute("juegos", juegos);
                 
                 // Redirijo al main
                 response.sendRedirect("index.jsp");

@@ -13,6 +13,10 @@
     margin-bottom: 15px;
 }
 
+.hour {
+    width: 98px !important;
+}
+
 .select-style option {
     background-color: #6D4891;
 }
@@ -29,9 +33,7 @@
             appearance: none;
 }
 
-.select-style select:focus {
-    outline: none;
-}
+/*____________________________________________________________________________*/
 
 .menu_discreto {
     color: #BEB1CB;
@@ -41,11 +43,28 @@
     cursor: pointer;
 }
 
-#equipos {
+#div_entrada_datos{
+    /*display: inline;*/
+}
+
+.cuadrito_entrada_datos {
     background-color: #481A76;
     padding: 8px;
     border-radius: 5px;
     width: 216px;
+}
+
+.cuadrito_entrada_datos h3{
+    letter-spacing: 0px !important;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+.date_style {
+    width: 200px;
+    height: 28px;
 }
 
 /* BOTONES */
