@@ -29,7 +29,17 @@ GRANT ALL ON SCHEMA predeterminado TO postgres;
 
 GRANT ALL ON SCHEMA predeterminado TO readinsert;
 
+-- User: readinsert
+-- DROP USER readinsert;
 
+CREATE USER readinsert WITH
+  LOGIN
+  NOSUPERUSER
+  INHERIT
+  NOCREATEDB
+  NOCREATEROLE
+  NOREPLICATION
+  CONNECTION LIMIT 15;
 
 
 

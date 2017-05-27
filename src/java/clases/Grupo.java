@@ -29,4 +29,8 @@ public class Grupo {
     public ArrayList<Evento> getEventos(){
         return this.eventos;
     }
+    
+    public void asignarEvento(Evento evento){
+        this.eventos.add(evento);
+    }
 }

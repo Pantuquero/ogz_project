@@ -6,7 +6,10 @@ import clases.Grupo;
 import clases.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -42,12 +45,13 @@ public class Index extends HttpServlet {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
 
             // Recojo los botones para saber cual se ha pulsado
-            String unirseGrupo = request.getParameter("unirse_grupo");
-            String crearGrupo = request.getParameter("crear_grupo");
-            String abandonarGrupo = request.getParameter("abandonar_grupo");        
-            System.out.println(unirseGrupo);
+            String unirse_grupo = request.getParameter("unirse_grupo");
+            String crear_grupo = request.getParameter("crear_grupo");
+            String abandonar_grupo = request.getParameter("abandonar_grupo");
+            String crear_evento = request.getParameter("crear_evento");
+            
             // SOLICITUD DE UNION A GRUPO
-            if(unirseGrupo != null) {
+            if(unirse_grupo != null) {
                 
                 String cadena_id_grupo = request.getParameter("entrada_texto");
                 int id_grupo = Integer.parseInt(cadena_id_grupo);
@@ -57,7 +61,7 @@ public class Index extends HttpServlet {
                 sesion.setAttribute("usuario", usuario);
                 
             // SOLICITUD DE GREACION DE GRUPO
-            } else if(crearGrupo != null) {
+            } else if(crear_grupo != null) {
 
                 String nombre_grupo = request.getParameter("entrada_texto");
                 crearGrupo(nombre_grupo, usuario);
@@ -65,7 +69,7 @@ public class Index extends HttpServlet {
                 sesion.setAttribute("usuario", usuario);
 
             // SOLICITUD DE ABANDONO DE GRUPO
-            } else if(abandonarGrupo != null) {
+            } else if(abandonar_grupo != null) {
                 
                 if(request.getParameter("select_grupos") == null){
                     return;
@@ -78,6 +82,36 @@ public class Index extends HttpServlet {
                 
                 sesion.setAttribute("usuario", usuario);
                 
+            // SOLICITUD DE CREACION DE EVENTO
+            } else if (crear_evento != null) {
+                String grupo_seleccionado = request.getParameter("grupo_oculto");
+                
+                if(grupo_seleccionado != ""){
+                    String fecha_evento = request.getParameter("fecha_evento");
+                    String desde_hora = request.getParameter("desde_hora");
+                    String hasta_hora = request.getParameter("hasta_hora");
+                    String juego = request.getParameter("juego");
+                    
+                    int id_grupo = Integer.parseInt(grupo_seleccionado);
+                    
+                    ArrayList<String> asistentes = new ArrayList();
+                    asistentes.add(usuario.getNombre());
+                    
+                    SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+                    
+                    System.out.println(fecha_evento + " " + desde_hora);
+                    
+                    Date fecha_desde = formato.parse(fecha_evento + " " + desde_hora);
+                    Date fecha_hasta = formato.parse(fecha_evento + " " + hasta_hora);
+                    Calendar fecha_inicio = Calendar.getInstance();
+                    Calendar fecha_fin = Calendar.getInstance();
+                    fecha_inicio.setTime(fecha_desde);
+                    fecha_fin.setTime(fecha_hasta);
+
+                    Evento evento_provisional = new Evento(-1, fecha_inicio, fecha_fin, juego, asistentes);
+
+                    crearEvento(usuario, id_grupo, evento_provisional);
+                }
             }
             
             response.sendRedirect("index.jsp");
@@ -86,6 +120,22 @@ public class Index extends HttpServlet {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
+    }
+    
+    private Usuario crearEvento(Usuario usuario, int id_grupo, Evento evento_provisional){
+        Evento evento = evento_provisional;
+        
+        evento = GestorBDD.insertarEvento(evento_provisional, id_grupo);
+        
+        //Recorro los grupos del usuario para insertar el evento donde toque
+        for(int i=0; i <= usuario.getGrupos().size(); i++){
+            if(usuario.getGrupos().get(i).getIdentificador() == id_grupo){
+                usuario.getGrupos().get(i).asignarEvento(evento);
+                break;
+            }
+        }
+        
+        return usuario;
     }
     
     private Usuario unirAgrupo( int id_grupo, Usuario usuario){

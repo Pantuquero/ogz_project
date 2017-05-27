@@ -380,6 +380,49 @@ public class GestorBDD {
         return juegos;
     }
     
+    public static Evento insertarEvento(Evento evento, int id_grupo){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Creando evento...");
+            
+            Calendar fecha_inicio = evento.getFechaInicio();
+            Calendar fecha_fin = evento.getFechaFin();
+            
+            String cadena_fecha_inicio = convertirCalendarioAcadena(fecha_inicio);
+            String cadena_fecha_fin = convertirCalendarioAcadena(fecha_fin);
+            
+            String esquema = "predeterminado";
+            String tabla = "eventos";
+            String columnas = "fecha_inicio, fecha_fin, id_juego, id_grupo";
+            String valores = "TO_TIMESTAMP('" + cadena_fecha_inicio + "','DD/MM/YYYY HH24:MI:SS'), TO_TIMESTAMP('" + cadena_fecha_fin + "','DD/MM/YYYY HH24:MI:SS'), (SELECT id FROM predeterminado.juegos WHERE nombre = '" + evento.getJuego() + "'), " + id_grupo;
+            int id = conexion.insertar(esquema, tabla, columnas, valores);
+            
+            evento = new Evento(id, evento.getFechaInicio(),evento.getFechaFin(), evento.getJuego(), evento.getAsistentes());
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return evento;
+    }
+    
+    public static String convertirCalendarioAcadena(Calendar fecha){
+        String cadena_fecha = "";
+        
+        String dia = String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH));
+        String mes = String.format("%02d", fecha.get(Calendar.MONTH));
+        String anio = String.valueOf(fecha.get(Calendar.YEAR));
+        String hora = String.format("%02d", fecha.get(Calendar.HOUR));
+        String minutos = String.format("%02d", fecha.get(Calendar.MINUTE));
+        String segundos = "00";
+        cadena_fecha = dia + "/" +  mes + "/" + anio + " " + hora + ":" + minutos + ":" + segundos;
+
+        return cadena_fecha;
+    }
+    
     /*
     public static void main (String args[]){
         Usuario usuario = new Usuario("prueba@mail.com","prueba","pruebaprueba");

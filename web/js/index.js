@@ -4,7 +4,21 @@ document.getElementById("crear_grupo").addEventListener("click", validarGrupo);
 document.getElementById("recargar").addEventListener("click", recargar);
 document.getElementById("salir").addEventListener("click", salir);
 document.getElementById("crear_evento").addEventListener("click", validarEvento);
+document.getElementById("select_grupos").addEventListener("change",cambioGrupo);
 //document.getElementById("abandonar_grupo").addEventListener("click", validar);
+
+// Al iniciar
+
+$(document).ready(function(){
+    
+    //Cargo el grupo en el hidden del formulario 2
+    /*
+    var valor = document.getElementsByClassName("grupo_oculto").value;
+    alert(valor);*/
+    var selector = document.getElementById("select_grupos");
+    var valor = selector.options[0].value;
+    document.getElementById("grupo_oculto").value = valor;
+});
 
 // Funciones____________________________________________________________________
 
@@ -66,6 +80,12 @@ function validarEvento() {
             }
         }
     });
+}
+
+function cambioGrupo() {
+    var selector = document.getElementById("select_grupos");
+    var valor = selector.options[selector.selectedIndex].value;
+    document.getElementById("grupo_oculto").value = valor;
 }
 
 function recargar() {
