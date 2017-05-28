@@ -65,14 +65,37 @@
                                             HttpSession sesion = request.getSession();
                                             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
                                             grupos = usuario.getGrupos();
+                                            
+                                            //Recojo la galleta para establecer el grupo seleccionado
+                                            Cookie[] galletas = request.getCookies();
+                                            int grupo_seleccionado = -1;
+                                            if(galletas != null){
+                                                
+                                                for(Cookie galleta : galletas){
+                                                    
+                                                    if(galleta.getName().equals("grupo_seleccionado")){
+                                                        
+                                                        grupo_seleccionado = Integer.parseInt(galleta.getValue());
+                                                    }
+                                                }
+                                            }
 
                                             if(usuario.getGrupos().size() != 0){
+                                                
                                                 for(int i=0; i<grupos.size(); i++){
+                                                    
                                                     int codigo = grupos.get(i).getIdentificador();
                                                     String nombre = grupos.get(i).getNombre();
                                                     String codigo_formateado = String.format("%04d", codigo);
-
-                                                    out.println("<option class=\"\" value=\"" + codigo_formateado + "\">(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                    
+                                                    if(codigo != grupo_seleccionado){
+                                                        
+                                                        out.println("<option class=\"\" value=\"" + codigo_formateado + "\">(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                        
+                                                    }else {
+                                                        
+                                                        out.println("<option class=\"\" value=\"" + codigo_formateado + "\" selected>(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                    }
                                                 }
                                                 
                                                 id_grupo_inicial = usuario.getGrupos().get(0).getIdentificador();
@@ -156,7 +179,7 @@
                                 <input type="text" class="entrada_texto" id="juego" name="juego" list="juegos" placeholder="Choose your game!">
                                 <datalist id="juegos" name="juegos">
                                     <%
-                                        //Relleno la lista de grupos del usuario
+                                        //Relleno la lista de juegos
                                         try {
                                             ArrayList<String> juegos =  new ArrayList<String>();
 
@@ -164,9 +187,11 @@
                                             juegos = (ArrayList<String>) sesion.getAttribute("juegos");
 
                                             if(juegos.size() != 0){
+                                                
                                                 for(int i=0; i<juegos.size(); i++){
+                                                    
                                                     String nombre = juegos.get(i);
-
+                                                    
                                                     out.println("<option value=\"" + nombre + "\">");
                                                 }
                                             }
@@ -198,6 +223,11 @@
                 <div id="calendar" class="fc-calendar-container"></div>
             </div>
 	</div><!-- /container -->
+        
+        <!-- Cargo la lista de eventos del grupo seleccionado en js -->
+        <script type="text/javascript">
+            
+        </script>
         
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery.calendario.js"></script>

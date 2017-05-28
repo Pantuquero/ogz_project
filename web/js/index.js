@@ -12,9 +12,6 @@ document.getElementById("select_grupos").addEventListener("change",cambioGrupo);
 $(document).ready(function(){
     
     //Cargo el grupo en el hidden del formulario 2
-    /*
-    var valor = document.getElementsByClassName("grupo_oculto").value;
-    alert(valor);*/
     var selector = document.getElementById("select_grupos");
     var valor = selector.options[0].value;
     document.getElementById("grupo_oculto").value = valor;
@@ -83,9 +80,14 @@ function validarEvento() {
 }
 
 function cambioGrupo() {
+    // Cada vez que se modifica el grupo lo guardo en el hidden del formulario dos
     var selector = document.getElementById("select_grupos");
     var valor = selector.options[selector.selectedIndex].value;
     document.getElementById("grupo_oculto").value = valor;
+    
+    // También establezco la galleta para guardar el grupo actual
+    document.cookie = "grupo_seleccionado=" + valor;
+    recargar();
 }
 
 function recargar() {

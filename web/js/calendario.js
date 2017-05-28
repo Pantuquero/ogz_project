@@ -11,7 +11,6 @@ $(function () {
     $month = $('#custom-month').html(cal.getMonthName()),
     $year = $('#custom-year').html(cal.getYear());
     
-    
     anadirEventos();
     /**
      * Función para cargar los eventos de la BDD
