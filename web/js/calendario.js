@@ -29,8 +29,6 @@ $(function () {
             //alert(dateProperties["day"]);
         },
         
-        
-
         caldata: codropsEvents
     }),
     $month = $('#custom-month').html(cal.getMonthName()),

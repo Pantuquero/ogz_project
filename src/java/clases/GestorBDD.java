@@ -180,9 +180,9 @@ public class GestorBDD {
                 
                 int identificador = resultado.getInt("id");
                 Calendar fecha_inicio = Calendar.getInstance();
-                    fecha_inicio.setTime(resultado.getDate("fecha_inicio"));
+                    fecha_inicio.setTime(resultado.getTimestamp("fecha_inicio"));
                 Calendar fecha_fin = Calendar.getInstance();
-                    fecha_fin.setTime(resultado.getDate("fecha_fin"));
+                    fecha_fin.setTime(resultado.getTimestamp("fecha_fin"));
                 String juego = resultado.getString("juego");
                 
                 ArrayList<String> asistentes = new ArrayList<String>();
@@ -396,6 +396,7 @@ public class GestorBDD {
             String esquema = "predeterminado";
             String tabla = "eventos";
             String columnas = "fecha_inicio, fecha_fin, id_juego, id_grupo";
+            System.out.println("***************************************************************" + cadena_fecha_fin);
             String valores = "TO_TIMESTAMP('" + cadena_fecha_inicio + "','DD/MM/YYYY HH24:MI:SS'), TO_TIMESTAMP('" + cadena_fecha_fin + "','DD/MM/YYYY HH24:MI:SS'), (SELECT id FROM predeterminado.juegos WHERE nombre = '" + evento.getJuego() + "'), " + id_grupo;
             int id = conexion.insertar(esquema, tabla, columnas, valores);
             
@@ -440,7 +441,7 @@ public class GestorBDD {
         String dia = String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH));
         String mes = String.format("%02d", fecha.get(Calendar.MONTH)+1);
         String anio = String.valueOf(fecha.get(Calendar.YEAR));
-        String hora = String.format("%02d", fecha.get(Calendar.HOUR));
+        String hora = String.format("%02d", fecha.get(Calendar.HOUR_OF_DAY));
         String minutos = String.format("%02d", fecha.get(Calendar.MINUTE));
         String segundos = "00";
         cadena_fecha = dia + "/" +  mes + "/" + anio + " " + hora + ":" + minutos + ":" + segundos;
