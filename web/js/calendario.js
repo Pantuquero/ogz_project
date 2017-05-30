@@ -1,31 +1,40 @@
 $(function () {
+    
+    // Recojo el grupo actual seleccionado
+    var selector = document.getElementById("select_grupos");
+    var grupo_seleccionado = selector.options[selector.selectedIndex].value;
+    
+    //var codropsEvents = {};
+    //codropsEvents['05-03-2017'] = '<span>Fullscreen Background Image Slideshow with CSS3</span>,<span>Fullscreen Background Image Slideshow with CSS3</span>';
+    //codropsEvents['05-04-2017'] = '<span>Fullscreen Background Image Slideshow with CSS3</span>';
+    
+    //var grupo_seleccionado = getCookie();
+    //var grupo_seleccionado = document.cookie;
+    
+    
+    /*
+    //var codropsEvents = {'05-03-2017' : '<span>Fullscreen Background Image Slideshow with CSS3</span>'};
+    var codropsEvents = {};
+    codropsEvents['05-03-2017'] = '<span>Fullscreen Background Image Slideshow with CSS3</span>';
+    codropsEvents['05-04-2017'] = '<span>Fullscreen Background Image Slideshow with CSS3</span>';
+    
+    cal.setData(codropsEvents);
+    
+    */
+    
     var cal = $('#calendar').calendario({onDayClick: function ($el, $contentEl, dateProperties) {
             for (var key in dateProperties) {
                 console.log(key + ' = ' + dateProperties[ key ]);
             }
             //alert(dateProperties["day"]);
         },
+        
+        
 
         caldata: codropsEvents
     }),
     $month = $('#custom-month').html(cal.getMonthName()),
     $year = $('#custom-year').html(cal.getYear());
-    
-    anadirEventos();
-    /**
-     * Función para cargar los eventos de la BDD
-     * @returns {undefined}
-     */
-    function anadirEventos(){
-        cal.setData( {
-            '05-25-2017' : 
-                '<span class="evento" hora="19:30 - 23:00" juego="Tabletop simulator" participantes="@KgsRocks,@Mike">\n\
-                    <b><u>19:30 - 23:00</u></b><br>\n\
-                    <b><i>Tabletop simulator</i></b><br>\n\
-                    @KgsRocks,@Mike\n\
-                </span>'
-        } );
-    }
     
     //Botones parte superior derecha
     $('#custom-next').on('click', function () {
@@ -62,6 +71,51 @@ $(function () {
     function updateMonthYear() {
         $month.html(cal.getMonthName());
         $year.html(cal.getYear());
+    }
+    
+    /*
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        
+        for(var i = 0; i < ca.length; i++) {
+        
+            var c = ca[i];
+            
+            while (c.charAt(0) == ' ') {
+        
+                c = c.substring(1);
+            }
+
+            if (c.indexOf(name) == 0) {
+        
+                return c.substring(name.length, c.length);
+            }
+        }
+
+        return "";
+    }
+    */
+   
+    function getCookie(cname){
+        var name = cname + "";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        
+        for(var i = 0; i < ca.length; i++){
+            var c = ca[i];
+            
+            while (c.charAt(0) == ' '){
+                c = c.substring(1);
+            }
+            
+            if(c.indexOf(name) == 0){
+                return c.substring(name.length, c.length);
+            }
+        }
+        
+        return "";
     }
 
     // you can also add more data later on. As an example:

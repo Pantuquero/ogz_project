@@ -5,6 +5,7 @@ document.getElementById("recargar").addEventListener("click", recargar);
 document.getElementById("salir").addEventListener("click", salir);
 document.getElementById("crear_evento").addEventListener("click", validarEvento);
 document.getElementById("select_grupos").addEventListener("change",cambioGrupo);
+//document.getElementsByClassName("evento").addEventListener("click",infoEvento);
 //document.getElementById("abandonar_grupo").addEventListener("click", validar);
 
 // Al iniciar
@@ -87,6 +88,7 @@ function cambioGrupo() {
     
     // También establezco la galleta para guardar el grupo actual
     document.cookie = "grupo_seleccionado=" + valor;
+    
     recargar();
 }
 

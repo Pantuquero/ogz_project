@@ -172,7 +172,7 @@ public class GestorBDD {
             
             String columnas = "id, fecha_inicio, fecha_fin, (SELECT nombre FROM predeterminado.juegos WHERE juegos.id = id_juego) AS juego";
             String tablas = "predeterminado.eventos";
-            String condiciones = "id_grupo = " + grupo.getIdentificador();
+            String condiciones = "id_grupo = " + grupo.getIdentificador() + " ORDER BY 2, 3, 4";
             ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
             
             while(resultado.next()){
@@ -413,7 +413,7 @@ public class GestorBDD {
         String cadena_fecha = "";
         
         String dia = String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH));
-        String mes = String.format("%02d", fecha.get(Calendar.MONTH));
+        String mes = String.format("%02d", fecha.get(Calendar.MONTH)+1);
         String anio = String.valueOf(fecha.get(Calendar.YEAR));
         String hora = String.format("%02d", fecha.get(Calendar.HOUR));
         String minutos = String.format("%02d", fecha.get(Calendar.MINUTE));
