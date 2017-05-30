@@ -39,24 +39,31 @@ $(function () {
     //Botones parte superior derecha
     $('#custom-next').on('click', function () {
         cal.gotoNextMonth(updateMonthYear);
+        anadirListenersEventos();
     });
     $('#custom-prev').on('click', function () {
         cal.gotoPreviousMonth(updateMonthYear);
+        anadirListenersEventos();
     });
     $('#custom-current').on('click', function () {
         cal.gotoNow(updateMonthYear);
+        anadirListenersEventos();
         //$.session.set("prueba","no yay");
     });
 
-    // Información del evento seleccionado
-    $('.evento').on('click', function() {
-        //alert($(this).text());
-        alert($(this).attr('hora') + "\n" +
-              $(this).attr('juego') + "\n" +
-              $(this).attr('participantes'));
-        
-        detenerListeners();
-    });
+    anadirListenersEventos();
+
+    // Muestra un alert con la info del evento seleccionado
+    function anadirListenersEventos(){
+        $('.evento').on('click', function() {
+            //alert($(this).text());
+            alert($(this).attr('hora') + "\n" +
+                  $(this).attr('juego') + "\n" +
+                  $(this).attr('participantes'));
+
+            detenerListeners();
+        }); 
+    }
     
     /**
      * Detiene el "Event bubbling" de los listeners

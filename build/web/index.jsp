@@ -294,79 +294,43 @@
 	<script type="text/javascript" src="js/calendario.js"></script>
         <script src="js/jquery.validate.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
-        
-        <!-- Script  -->
-        <script type="text/javascript">
             
-            <% // Pinto los eventos del grupo, la función cal.setData no admite parámetros correctamente
-                /*
-                if(grupos.size() != 0){
+        <%!
+            // Funciones que se usan al pintar los eventos
+            
+            private String formatearFechaEvento(Calendar fecha){
+                String cadena_fecha = "";
 
-                    Grupo grupo = null;
+                cadena_fecha = String.format("%02d", fecha.get(Calendar.MONTH)+1) + "-" + String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH)) + "-" + fecha.get(Calendar.YEAR);
 
-                    // Inicio funcion
-                    out.println("cal.setData( {");
+                return cadena_fecha;
+            }
 
-                    // Introduccion de eventos
-                    for(int i=0;i<grupos.size();i++){
+            private String formatearHoraEvento(Calendar fecha){
+                String cadena_hora = "";
 
-                        if(grupos.get(i).getIdentificador() == id_grupo_inicial){
-                        System.out.println(grupos.get(i).getIdentificador() + " - " + id_grupo_inicial);    
-                            if(grupos.get(i).getEventos().size() != 0){
+                cadena_hora = String.format("%02d", fecha.get(Calendar.HOUR)) + ":" + String.format("%02d", fecha.get(Calendar.MINUTE));
 
-                                for(Evento evento : grupos.get(i).getEventos()){
+                return cadena_hora;
+            }
 
-                                    //out.println("'05-01-2017' : '<span>Fullscreen Background Image Slideshow with CSS3</span>'");
-                                    out.println("'" + formatearFechaEvento(evento.getFechaInicio()) + "' : " +
-                                                "'<span class=\"evento\" hora=\"" + formatearHoraEvento(evento.getFechaInicio()) + " - " + formatearHoraEvento(evento.getFechaFin()) + "\" juego=\"" + evento.getJuego() + "\" participantes=\"" + formatearAsistentes(evento.getAsistentes()) + "\">" +
-                                                "<b><u>" + formatearHoraEvento(evento.getFechaInicio()) + " - " + formatearHoraEvento(evento.getFechaFin()) + "</b></u><br>" +
-                                                "<b><i>" + evento.getJuego() + "</b></i><br>" +
-                                                formatearAsistentes(evento.getAsistentes()) + "</span>'");
-                                }
-                                break;
-                            }
-                        }
+            private String formatearAsistentes(ArrayList<String> asistentes){
+                String cadena_asistentes = "";
+
+                for(int i=0;i<asistentes.size();i++){
+
+                    if(i == asistentes.size()){
+
+                        cadena_asistentes += "@" + asistentes.get(i);
+
+                    }else{
+
+                        cadena_asistentes += "@" + asistentes.get(i) + ",";
                     }
-
-                    // Fin funcion
-                    out.println("} );");
-                }*/
-            %>
-            <%!
-                private String formatearFechaEvento(Calendar fecha){
-                    String cadena_fecha = "";
-
-                    cadena_fecha = String.format("%02d", fecha.get(Calendar.MONTH)+1) + "-" + String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH)) + "-" + fecha.get(Calendar.YEAR);
-
-                    return cadena_fecha;
                 }
 
-                private String formatearHoraEvento(Calendar fecha){
-                    String cadena_hora = "";
-
-                    cadena_hora = String.format("%02d", fecha.get(Calendar.HOUR)) + ":" + String.format("%02d", fecha.get(Calendar.MINUTE));
-
-                    return cadena_hora;
-                }
-
-                private String formatearAsistentes(ArrayList<String> asistentes){
-                    String cadena_asistentes = "";
-
-                    for(int i=0;i<asistentes.size();i++){
-
-                        if(i == asistentes.size()){
-
-                            cadena_asistentes += "@" + asistentes.get(i);
-
-                        }else{
-
-                            cadena_asistentes += "@" + asistentes.get(i) + ",";
-                        }
-                    }
-
-                    return cadena_asistentes;
-                }
-            %>
-        </script>
+                return cadena_asistentes;
+            }
+        %>
     </body>
 </html>
