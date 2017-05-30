@@ -127,7 +127,7 @@
                             </form>
                         </div>
                         <br>
-                        <div class="cuadrito_entrada_datos">
+                        <div class="cuadrito_entrada_datos" id="cuadrito_eventos">
                             <h3>New event</h3>
                             <form id="formulario_eventos" action="index" method="post">
                                 <input type="date" id="fecha_evento" name="fecha_evento" class="date_style">

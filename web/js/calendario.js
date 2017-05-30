@@ -2,7 +2,12 @@ $(function () {
     
     // Recojo el grupo actual seleccionado
     var selector = document.getElementById("select_grupos");
-    var grupo_seleccionado = selector.options[selector.selectedIndex].value;
+    
+    if(selector.length > 0){
+        var grupo_seleccionado = selector.options[selector.selectedIndex].value;
+    }else {
+        $('#cuadrito_eventos').hide();
+    }
     
     //var codropsEvents = {};
     //codropsEvents['05-03-2017'] = '<span>Fullscreen Background Image Slideshow with CSS3</span>,<span>Fullscreen Background Image Slideshow with CSS3</span>';
