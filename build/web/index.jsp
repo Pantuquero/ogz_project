@@ -270,7 +270,7 @@
                         // En el momento en el que la fecha cambia hay que crear un nuevo evento
                         } else {
                             // Comienzo cerrando el evento anterior, con el println además salto de línea
-                            out.println(";");
+                            out.println("';");
                             
                             // Restablezco la fecha inicial y el primer evento en fecha
                             fecha_anterior = formatearFechaEvento(evento.getFechaInicio());
@@ -309,7 +309,7 @@
             private String formatearHoraEvento(Calendar fecha){
                 String cadena_hora = "";
 
-                cadena_hora = String.format("%02d", fecha.get(Calendar.HOUR)) + ":" + String.format("%02d", fecha.get(Calendar.MINUTE));
+                cadena_hora = String.format("%02d", fecha.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", fecha.get(Calendar.MINUTE));
 
                 return cadena_hora;
             }

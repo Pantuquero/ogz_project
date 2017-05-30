@@ -103,6 +103,7 @@ public class GestorBDD {
             resultado.next();
             
             identificador = resultado.getInt("id");
+            
             email = resultado.getString("email");
             nombre = resultado.getString("nombre");
             contrasena = resultado.getString("contrasena");
@@ -380,7 +381,7 @@ public class GestorBDD {
         return juegos;
     }
     
-    public static Evento insertarEvento(Evento evento, int id_grupo){
+    public static Evento insertarEvento(Evento evento, int id_grupo, Usuario usuario){
         Conexion conexion = new Conexion();
         
         try {
@@ -400,6 +401,9 @@ public class GestorBDD {
             
             evento = new Evento(id, evento.getFechaInicio(),evento.getFechaFin(), evento.getJuego(), evento.getAsistentes());
             
+            //Inserto el usuario que ha creado el evento en los asistentes
+            insertarAsistente(usuario, evento);
+            
         }catch(Exception e){
             e.printStackTrace();
             System.err.println(e.getClass().getName()+": "+e.getMessage());
@@ -407,6 +411,27 @@ public class GestorBDD {
         }
         
         return evento;
+    }
+    
+    public static void insertarAsistente(Usuario usuario, Evento evento){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Insertando asistente en el evento...");
+            
+            String esquema = "predeterminado";
+            String tabla = "evento_usuario";
+            String columnas = "id_usuario, id_evento";
+            String valores = usuario.getIdentificador() + "," + evento.getIdentificador();
+            int id = conexion.insertar(esquema, tabla, columnas, valores);
+            
+            evento = new Evento(id, evento.getFechaInicio(),evento.getFechaFin(), evento.getJuego(), evento.getAsistentes());
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
     }
     
     public static String convertirCalendarioAcadena(Calendar fecha){
