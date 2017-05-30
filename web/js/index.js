@@ -5,6 +5,8 @@ document.getElementById("recargar").addEventListener("click", recargar);
 document.getElementById("salir").addEventListener("click", salir);
 document.getElementById("crear_evento").addEventListener("click", validarEvento);
 document.getElementById("select_grupos").addEventListener("change",cambioGrupo);
+document.getElementById("desde_hora").addEventListener("change", validarHoraHasta);
+document.getElementById("hasta_hora").addEventListener("change", validarHoraDesde);
 //document.getElementsByClassName("evento").addEventListener("click",infoEvento);
 //document.getElementById("abandonar_grupo").addEventListener("click", validar);
 
@@ -20,8 +22,41 @@ $(document).ready(function(){
 
 // Funciones____________________________________________________________________
 
+function validarHoraHasta() {
+    var hora_desde = $(this).val();
+    var numero_desde = parseInt(hora_desde.substring(0,2));
+    
+    $( ".hora_hasta" ).each(function() {
+        hora_hasta = $(this).val();
+        numero_hasta = parseInt(hora_hasta.substring(0,2));
+        
+        if(numero_desde > numero_hasta){
+            $(this).attr("hidden","true");
+        }else {
+            $(this).removeAttr("hidden");
+        }
+    });
+}
+
+function validarHoraDesde() {
+    var hora_hasta = $(this).val();
+    var numero_hasta = parseInt(hora_hasta.substring(0,2));
+    
+    $( ".hora_desde" ).each(function() {
+        hora_desde = $(this).val();
+        numero_desde = parseInt(hora_desde.substring(0,2));
+        
+        if(numero_hasta < numero_desde){
+            $(this).attr("hidden","true");
+        }else {
+            $(this).removeAttr("hidden");
+        }
+    });
+}
+
 $.validator.addMethod("valueNotEquals", function(value, element, arg){
-  return arg != value;
+    
+    return arg != value;
  }, "Value must not equal arg.");
 
 function validarGrupo() {

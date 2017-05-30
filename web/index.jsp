@@ -120,7 +120,7 @@
                                     %>
                                 </select>
                                 <br>
-                                <input type="text" class="entrada_texto" name="entrada_texto">  <button class="boton" id="unirse_grupo" name="unirse_grupo" type="input" title="Join this team!">Join</button>
+                                <input type="text" class="entrada_texto" name="entrada_texto"  placeholder="Join/create your team!">  <button class="boton" id="unirse_grupo" name="unirse_grupo" type="input" title="Join this team!">Join</button>
                                 <button class="boton" id="crear_grupo" type="input" name="crear_grupo" title="New team">New</button>
                                 <button class="boton" id="abandonar_grupo" type="input" name="abandonar_grupo" title="Leave current team">Leave</button>
                                 <br>
@@ -134,57 +134,57 @@
                                 <br><br>
                                 <select class="select-style hour" id="desde_hora" name="desde_hora">
                                     <option style="display: none;" selected>From</option>
-                                    <option value="00:00">00:00</option>
-                                    <option value="01:00">01:00</option>
-                                    <option value="02:00">02:00</option>
-                                    <option value="03:00">03:00</option>
-                                    <option value="04:00">04:00</option>
-                                    <option value="05:00">05:00</option>
-                                    <option value="06:00">06:00</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
+                                    <option class="hora_desde" value="00:00">00:00</option>
+                                    <option class="hora_desde" value="01:00">01:00</option>
+                                    <option class="hora_desde" value="02:00">02:00</option>
+                                    <option class="hora_desde" value="03:00">03:00</option>
+                                    <option class="hora_desde" value="04:00">04:00</option>
+                                    <option class="hora_desde" value="05:00">05:00</option>
+                                    <option class="hora_desde" value="06:00">06:00</option>
+                                    <option class="hora_desde" value="07:00">07:00</option>
+                                    <option class="hora_desde" value="08:00">08:00</option>
+                                    <option class="hora_desde" value="09:00">09:00</option>
+                                    <option class="hora_desde" value="10:00">10:00</option>
+                                    <option class="hora_desde" value="11:00">11:00</option>
+                                    <option class="hora_desde" value="12:00">12:00</option>
+                                    <option class="hora_desde" value="13:00">13:00</option>
+                                    <option class="hora_desde" value="14:00">14:00</option>
+                                    <option class="hora_desde" value="15:00">15:00</option>
+                                    <option class="hora_desde" value="16:00">16:00</option>
+                                    <option class="hora_desde" value="17:00">17:00</option>
+                                    <option class="hora_desde" value="18:00">18:00</option>
+                                    <option class="hora_desde" value="19:00">19:00</option>
+                                    <option class="hora_desde" value="20:00">20:00</option>
+                                    <option class="hora_desde" value="21:00">21:00</option>
+                                    <option class="hora_desde" value="22:00">22:00</option>
+                                    <option class="hora_desde" value="23:00">23:00</option>
                                 </select>
                                 <select class="select-style hour" id="hasta_hora" name="hasta_hora">
                                     <option style="display: none;" selected>To</option>
-                                    <option value="00:00">00:00</option>
-                                    <option value="01:00">01:00</option>
-                                    <option value="02:00">02:00</option>
-                                    <option value="03:00">03:00</option>
-                                    <option value="04:00">04:00</option>
-                                    <option value="05:00">05:00</option>
-                                    <option value="06:00">06:00</option>
-                                    <option value="07:00">07:00</option>
-                                    <option value="08:00">08:00</option>
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
+                                    <option class="hora_hasta" value="00:00">00:00</option>
+                                    <option class="hora_hasta" value="01:00">01:00</option>
+                                    <option class="hora_hasta" value="02:00">02:00</option>
+                                    <option class="hora_hasta" value="03:00">03:00</option>
+                                    <option class="hora_hasta" value="04:00">04:00</option>
+                                    <option class="hora_hasta" value="05:00">05:00</option>
+                                    <option class="hora_hasta" value="06:00">06:00</option>
+                                    <option class="hora_hasta" value="07:00">07:00</option>
+                                    <option class="hora_hasta" value="08:00">08:00</option>
+                                    <option class="hora_hasta" value="09:00">09:00</option>
+                                    <option class="hora_hasta" value="10:00">10:00</option>
+                                    <option class="hora_hasta" value="11:00">11:00</option>
+                                    <option class="hora_hasta" value="12:00">12:00</option>
+                                    <option class="hora_hasta" value="13:00">13:00</option>
+                                    <option class="hora_hasta" value="14:00">14:00</option>
+                                    <option class="hora_hasta" value="15:00">15:00</option>
+                                    <option class="hora_hasta" value="16:00">16:00</option>
+                                    <option class="hora_hasta" value="17:00">17:00</option>
+                                    <option class="hora_hasta" value="18:00">18:00</option>
+                                    <option class="hora_hasta" value="19:00">19:00</option>
+                                    <option class="hora_hasta" value="20:00">20:00</option>
+                                    <option class="hora_hasta" value="21:00">21:00</option>
+                                    <option class="hora_hasta" value="22:00">22:00</option>
+                                    <option class="hora_hasta" value="23:00">23:00</option>
                                 </select>
                                 <br>
                                 <input type="text" class="entrada_texto" id="juego" name="juego" list="juegos" placeholder="Choose your game!">
