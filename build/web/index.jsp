@@ -31,6 +31,13 @@
                 
                 return;
             }
+            
+            HttpSession sesion = request.getSession();
+            ArrayList<Grupo> grupos =  new ArrayList<Grupo>();
+            ArrayList<Evento> eventos = new ArrayList<Evento>();
+            int id_grupo_inicial = -1;
+
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
         %>
     </head>
     <body>
@@ -50,6 +57,7 @@
                     <h2>Orgamingzation</h2>
                     <br>
                     <div class="menu_discreto">
+                        <label id="etiqueta_usuario" value="<% out.println(usuario.getNombre()); %>"><% out.println("@" + usuario.getNombre()); %></label><br><br>
                         <label id="recargar">Reload</label> | <label id="salir">Logout</label>
                     </div>
                     <br>
@@ -59,12 +67,6 @@
                             <form id="formulario_grupos" action="index" method="post">
                                 <select class="select-style" name="select_grupos" id="select_grupos">
                                     <%
-                                        HttpSession sesion = request.getSession();
-                                        ArrayList<Grupo> grupos =  new ArrayList<Grupo>();
-                                        ArrayList<Evento> eventos = new ArrayList<Evento>();
-                                        int id_grupo_inicial = -1;
-
-                                        Usuario usuario = (Usuario) sesion.getAttribute("usuario");
                                         grupos = usuario.getGrupos();
                                         
                                         //Relleno la lista de grupos del usuario
@@ -97,11 +99,11 @@
                                                     
                                                     if(codigo != id_grupo_inicial){
                                                         
-                                                        out.println("<option class=\"\" value=\"" + codigo_formateado + "\">(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                        out.println("<option class=\"opcion_grupo\" value=\"" + codigo_formateado + "\">(#" + codigo_formateado + ") - " + nombre + "</option>");
                                                         
                                                     }else {
                                                         
-                                                        out.println("<option class=\"\" value=\"" + codigo_formateado + "\" selected>(#" + codigo_formateado + ") - " + nombre + "</option>");
+                                                        out.println("<option class=\"opcion_grupo\" value=\"" + codigo_formateado + "\" selected>(#" + codigo_formateado + ") - " + nombre + "</option>");
                                                         
                                                         //Recojo el array de eventos para cargar los eventos más abajo
                                                         for(Evento evento : grupos.get(i).getEventos()){
@@ -224,8 +226,8 @@
                         <span id="custom-month" class="custom-month"></span>
                         <span id="custom-year" class="custom-year"></span>
                         <nav>
-                            <span id="custom-prev" class="custom-prev"></span>
-                            <span id="custom-next" class="custom-next"></span>
+                            <span id="custom-prev" class="custom-prev" title="Previous month"></span>
+                            <span id="custom-next" class="custom-next" title="Next month"></span>
                             <span id="custom-current" class="custom-current" title="Go to current date"></span>
                         </nav>
                     </h3>
@@ -249,7 +251,7 @@
                     
                     for(Evento evento : eventos){
                         String fecha_evento = formatearFechaEvento(evento.getFechaInicio());
-                        String cadena_evento = "<span class=\"evento\" hora=\"" + formatearHoraEvento(evento.getFechaInicio()) + " - " + formatearHoraEvento(evento.getFechaFin()) + "\" juego=\"" + evento.getJuego() + "\" participantes=\"" + formatearAsistentes(evento.getAsistentes()) + "\">" +
+                        String cadena_evento = "<span class=\"evento\" id=\"" + evento.getIdentificador() + "\" title=\"L-click: JOIN ; R-click: LEAVE\" hora=\"" + formatearHoraEvento(evento.getFechaInicio()) + " - " + formatearHoraEvento(evento.getFechaFin()) + "\" juego=\"" + evento.getJuego() + "\" participantes=\"" + formatearAsistentes(evento.getAsistentes()) + "\">" +
                                                 "<b><u>" + formatearHoraEvento(evento.getFechaInicio()) + " - " + formatearHoraEvento(evento.getFechaFin()) + "</b></u><br>" +
                                                 "<b><i>" + evento.getJuego() + "</b></i><br>" +
                                                 formatearAsistentes(evento.getAsistentes()) + "</span>";

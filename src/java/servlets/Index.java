@@ -37,6 +37,7 @@ public class Index extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("Accedido a index.java, procesando peticion...");
         
         try {
             comprobarSesion(request, response);
@@ -49,6 +50,7 @@ public class Index extends HttpServlet {
             String crear_grupo = request.getParameter("crear_grupo");
             String abandonar_grupo = request.getParameter("abandonar_grupo");
             String crear_evento = request.getParameter("crear_evento");
+            String unirse_evento = request.getParameter("unirse_evento");
             
             // SOLICITUD DE UNION A GRUPO
             if(unirse_grupo != null) {
@@ -112,6 +114,13 @@ public class Index extends HttpServlet {
 
                     crearEvento(usuario, id_grupo, evento_provisional);
                 }
+                
+            // SOLICITUD DE UNION A GRUPO
+            } else if (unirse_evento != null){
+                String cadena_id_evento = request.getParameter("id_evento");
+                int id_evento = Integer.parseInt(cadena_id_evento);
+                
+                usuario = unirAevento(usuario, id_evento);
             }
             
             response.sendRedirect("index.jsp");
@@ -120,6 +129,17 @@ public class Index extends HttpServlet {
             System.err.println(e.getClass().getName()+": "+e.getMessage());
             System.exit(0);
         }
+    }
+    
+    private Usuario unirAevento(Usuario usuario, int id_evento){
+        ArrayList<String> asistentes = new ArrayList<String>();
+        Evento evento_provisional = new Evento(id_evento, Calendar.getInstance(), Calendar.getInstance(), "nogame", asistentes);
+        
+        GestorBDD.insertarAsistente(usuario, evento_provisional);
+        
+        usuario.setGrupos(GestorBDD.recibirGruposUsuario(usuario));
+        
+        return usuario;
     }
     
     private Usuario crearEvento(Usuario usuario, int id_grupo, Evento evento_provisional){

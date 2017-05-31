@@ -56,16 +56,75 @@ $(function () {
 
     anadirListenersEventos();
 
-    // Muestra un alert con la info del evento seleccionado
+    // Muestra dialogo de confirmacion para unirte o abandonar el evento
     function anadirListenersEventos(){
-        $('.evento').on('click', function() {
-            //alert($(this).text());
-            alert($(this).attr('hora') + "\n" +
-                  $(this).attr('juego') + "\n" +
-                  $(this).attr('participantes'));
-
-            detenerListeners();
-        }); 
+        $('.evento').on('mousedown', function(event){
+            var respuesta = false;
+            var participantes = $(this).attr('participantes');
+            var asistentes = participantes.split(",");
+            var usuario = "@" + $("#etiqueta_usuario").attr("value").trim();
+            var asiste = false;
+            
+            for(var i=0;i<asistentes.length;i++){
+                
+                if(asistentes[i] == usuario){
+                    
+                    asiste = true;
+                    break;
+                }else{
+                    asiste = false;
+                }
+            }
+            
+            // Click izquierdo
+            if(event.which == 1){
+                
+                // Compruebo si en los participantes está el usuario, si lo está no puede unirse de nuevo
+                if(asiste){
+                    
+                    // Muestro la información del evento
+                    alert($(this).attr('hora') + "\n" +
+                          $(this).attr('juego') + "\n" +
+                          $(this).attr('participantes'));
+                    detenerListeners();
+                    
+                    return;
+                }
+                
+                respuesta = confirm("JOIN this event?" + "\n\n" +
+                                    $(this).attr('hora') + "\n" +
+                                    $(this).attr('juego') + "\n" +
+                                    $(this).attr('participantes'));
+                
+                if(respuesta){
+                    var id_evento = $(this).attr("id");
+                    var url = "index";
+                    
+                    var datos = {};
+                    datos['unirse_evento'] = 'true';
+                    datos['id_evento'] = id_evento;
+                    
+                    jQuery.post(url, datos);
+                }
+                
+            // Click derecho
+            }else if (event.which == 3){
+                
+                // Compruebo si en los participantes está el usuario, si no está no puede abandonar el grupo
+                if(!asiste){
+                    return;
+                }
+                
+                respuesta = confirm("LEAVE this event?" + "\n\n" +
+                                    $(this).attr('hora') + "\n" +
+                                    $(this).attr('juego') + "\n" +
+                                    $(this).attr('participantes'));
+                            
+                if(respuesta){
+                    
+                }
+            }
+        });
     }
     
     /**
@@ -82,31 +141,6 @@ $(function () {
         $month.html(cal.getMonthName());
         $year.html(cal.getYear());
     }
-    
-    /*
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        
-        for(var i = 0; i < ca.length; i++) {
-        
-            var c = ca[i];
-            
-            while (c.charAt(0) == ' ') {
-        
-                c = c.substring(1);
-            }
-
-            if (c.indexOf(name) == 0) {
-        
-                return c.substring(name.length, c.length);
-            }
-        }
-
-        return "";
-    }
-    */
    
     function getCookie(cname){
         var name = cname + "";

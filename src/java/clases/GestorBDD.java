@@ -127,6 +127,11 @@ public class GestorBDD {
         return usuario;
     }
     
+    /**
+     * 
+     * @param usuario
+     * @return 
+     */
     public static ArrayList<Grupo> recibirGruposUsuario(Usuario usuario){
         Conexion conexion = new Conexion();
         ArrayList<Grupo> grupos = new ArrayList<Grupo>();
@@ -164,6 +169,11 @@ public class GestorBDD {
         return grupos;
     }
     
+    /**
+     * 
+     * @param grupo
+     * @return 
+     */
     public static ArrayList<Evento> recibirEventosGrupo(Grupo grupo){
         Conexion conexion = new Conexion();
         ArrayList<Evento> eventos = new ArrayList<Evento>();
@@ -204,6 +214,11 @@ public class GestorBDD {
         return eventos;
     }
     
+    /**
+     * 
+     * @param evento
+     * @return 
+     */
     public static ArrayList<String> recibirAsistentesEvento(Evento evento){
         Conexion conexion = new Conexion();
         ArrayList<String> asistentes = new ArrayList<String>();
@@ -301,6 +316,12 @@ public class GestorBDD {
         return grupo;
     }
     
+    /**
+     * 
+     * @param grupo
+     * @param usuario
+     * @return 
+     */
     public static boolean asignarGrupoAusuario(Grupo grupo, Usuario usuario){
         Conexion conexion = new Conexion();
         
@@ -333,6 +354,12 @@ public class GestorBDD {
         return false;
     }
     
+    /**
+     * 
+     * @param grupo
+     * @param usuario
+     * @return 
+     */
     public static boolean desasignarGrupoAusuario(Grupo grupo, Usuario usuario){
         Conexion conexion = new Conexion();
         
@@ -354,6 +381,10 @@ public class GestorBDD {
         return false;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static ArrayList<String> recibirJuegos(){
         Conexion conexion = new Conexion();
         ArrayList<String> juegos = new ArrayList<String>();
@@ -381,6 +412,13 @@ public class GestorBDD {
         return juegos;
     }
     
+    /**
+     * 
+     * @param evento
+     * @param id_grupo
+     * @param usuario
+     * @return 
+     */
     public static Evento insertarEvento(Evento evento, int id_grupo, Usuario usuario){
         Conexion conexion = new Conexion();
         
@@ -414,6 +452,11 @@ public class GestorBDD {
         return evento;
     }
     
+    /**
+     * 
+     * @param usuario
+     * @param evento 
+     */
     public static void insertarAsistente(Usuario usuario, Evento evento){
         Conexion conexion = new Conexion();
         
@@ -435,7 +478,12 @@ public class GestorBDD {
         }
     }
     
-    public static String convertirCalendarioAcadena(Calendar fecha){
+    /**
+     * 
+     * @param fecha
+     * @return 
+     */
+    private static String convertirCalendarioAcadena(Calendar fecha){
         String cadena_fecha = "";
         
         String dia = String.format("%02d", fecha.get(Calendar.DAY_OF_MONTH));
