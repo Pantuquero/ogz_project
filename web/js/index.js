@@ -1,6 +1,7 @@
 // Listeners
 document.getElementById("unirse_grupo").addEventListener("click", validarGrupo);
 document.getElementById("crear_grupo").addEventListener("click", validarGrupo);
+document.getElementById("etiqueta_usuario").addEventListener("click", mostrarMiembros);
 document.getElementById("recargar").addEventListener("click", recargar);
 document.getElementById("salir").addEventListener("click", salir);
 document.getElementById("crear_evento").addEventListener("click", validarEvento);
@@ -30,6 +31,14 @@ $(document).ready(function(){
     }
     */
 });
+
+function mostrarMiembros(){
+    var miembros = $("#etiqueta_usuario").attr("miembros");
+    
+    alert("Team members: " + "\n" +
+            miembros
+    );
+}
 
 function actualizarGalleta(){
     var selector = document.getElementById("select_grupos");

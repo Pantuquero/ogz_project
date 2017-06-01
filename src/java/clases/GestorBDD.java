@@ -549,6 +549,33 @@ public class GestorBDD {
         }
     }
     
+    public static ArrayList<String> recibirMiembrosGrupo(int id_grupo){
+        Conexion conexion = new Conexion();
+        ArrayList<String> asistentes = new ArrayList<String>();
+        
+        try{
+            System.out.println("Recibiendo lista de miembros...");
+            
+            String columnas = "DISTINCT nombre";
+            String tabla = "predeterminado.usuarios";
+            String condiciones = "id IN (SELECT id_usuario FROM predeterminado.grupo_usuario WHERE id_grupo = " + id_grupo + ")";
+            ResultSet resultado = conexion.seleccionar(columnas, tabla, condiciones);
+            
+            while(resultado.next()){
+                asistentes.add(resultado.getString("nombre"));
+            }
+            
+            resultado.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return asistentes;
+    }
+    
     /*
     public static void main (String args[]){
         Usuario usuario = new Usuario("prueba@mail.com","prueba","pruebaprueba");

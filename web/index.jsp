@@ -1,3 +1,4 @@
+<%@page import="clases.GestorBDD"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="clases.Evento"%>
 <%@page import="java.util.ArrayList"%>
@@ -38,6 +39,19 @@
             int id_grupo_inicial = -1;
 
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+            
+            //Recojo la galleta para establecer el grupo seleccionado
+            Cookie[] galletas = request.getCookies();
+            if(galletas != null){
+
+                for(Cookie galleta : galletas){
+
+                    if(galleta.getName().equals("grupo_seleccionado")){
+
+                        id_grupo_inicial = Integer.parseInt(galleta.getValue());
+                    }
+                }
+            }
         %>
     </head>
     <body>
@@ -57,7 +71,23 @@
                     <h2>Orgamingzation</h2>
                     <br>
                     <div class="menu_discreto">
-                        <label id="etiqueta_usuario" value="<% out.println(usuario.getNombre()); %>"><% out.println("@" + usuario.getNombre()); %></label><br><br>
+                        <%
+                            String miembros = "";
+                            // Recojo los miembros del grupo
+                            if(id_grupo_inicial != -1){
+                                ArrayList<String> asistentes = GestorBDD.recibirMiembrosGrupo(id_grupo_inicial);
+                                
+                                for(String asistente : asistentes){
+                                    
+                                    miembros += "@" + asistente + ",";
+                                    
+                                }
+                            }else{
+                                
+                                miembros = "@" + usuario.getNombre() + ",";
+                            }
+                        %>
+                        <label id="etiqueta_usuario" value="<% out.print(usuario.getNombre()); %>" miembros="<% out.print(miembros); %>"><% out.println("@" + usuario.getNombre()); %></label><br><br>
                         <label id="recargar">Reload</label> | <label id="salir">Logout</label>
                     </div>
                     <br>
@@ -69,21 +99,7 @@
                                     <%
                                         grupos = usuario.getGrupos();
                                         
-                                        //Relleno la lista de grupos del usuario
                                         try {    
-                                            
-                                            //Recojo la galleta para establecer el grupo seleccionado
-                                            Cookie[] galletas = request.getCookies();
-                                            if(galletas != null){
-                                                
-                                                for(Cookie galleta : galletas){
-                                                    
-                                                    if(galleta.getName().equals("grupo_seleccionado")){
-                                                        
-                                                        id_grupo_inicial = Integer.parseInt(galleta.getValue());
-                                                    }
-                                                }
-                                            }
 
                                             if(usuario.getGrupos().size() != 0){
                                                 // Para la primera ejecución inicializo la id del grupo seleccionado en el grupo 0
