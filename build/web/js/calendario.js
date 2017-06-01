@@ -28,9 +28,9 @@ $(function () {
     */
     
     var cal = $('#calendar').calendario({onDayClick: function ($el, $contentEl, dateProperties) {
-            for (var key in dateProperties) {
+            /*for (var key in dateProperties) {
                 console.log(key + ' = ' + dateProperties[ key ]);
-            }
+            }*/
             //alert(dateProperties["day"]);
         },
         

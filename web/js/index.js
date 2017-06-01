@@ -96,7 +96,6 @@ function validarGrupo() {
         rules: {
             entrada_texto: {
                 required: true,
-                minlength: 4,
                 maxlength: 15
             }
         },

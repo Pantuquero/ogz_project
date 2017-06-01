@@ -57,11 +57,15 @@ public class Index extends HttpServlet {
             if(unirse_grupo != null) {
                 
                 String cadena_id_grupo = request.getParameter("entrada_texto");
-                int id_grupo = Integer.parseInt(cadena_id_grupo);
+                int id_grupo = -1;
+                try{
+                    id_grupo = Integer.parseInt(cadena_id_grupo);
+                    
+                    usuario = unirAgrupo(id_grupo, usuario);
                 
-                usuario = unirAgrupo(id_grupo, usuario);
-                
-                sesion.setAttribute("usuario", usuario);
+                    sesion.setAttribute("usuario", usuario);
+                } catch(NumberFormatException e){
+                }
                 
             // SOLICITUD DE GREACION DE GRUPO
             } else if(crear_grupo != null) {
