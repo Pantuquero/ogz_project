@@ -15,8 +15,9 @@ document.getElementById("hasta_hora").addEventListener("change", validarHoraDesd
 $(document).ready(function(){
     
     //Cargo el grupo en el hidden del formulario 2
-    var selector = document.getElementById("select_grupos");
-    var valor = selector.options[0].value;
+    //var selector = document.getElementById("select_grupos");
+    //var valor = selector.options[0].value;
+    var valor = $('#select_grupos').find(":selected").val();
     document.getElementById("grupo_oculto").value = valor;
 });
 

@@ -121,7 +121,14 @@ $(function () {
                                     $(this).attr('participantes'));
                             
                 if(respuesta){
+                    var id_evento = $(this).attr("id");
+                    var url = "index";
                     
+                    var datos= {};
+                    datos['abandonar_evento'] = 'true';
+                    datos['id_evento'] = id_evento;
+                    
+                    jQuery.post(url, datos);
                 }
             }
         });

@@ -51,6 +51,7 @@ public class Index extends HttpServlet {
             String abandonar_grupo = request.getParameter("abandonar_grupo");
             String crear_evento = request.getParameter("crear_evento");
             String unirse_evento = request.getParameter("unirse_evento");
+            String abandonar_evento = request.getParameter("abandonar_evento");
             
             // SOLICITUD DE UNION A GRUPO
             if(unirse_grupo != null) {
@@ -115,12 +116,19 @@ public class Index extends HttpServlet {
                     crearEvento(usuario, id_grupo, evento_provisional);
                 }
                 
-            // SOLICITUD DE UNION A GRUPO
+            // SOLICITUD DE UNION A EVENTO
             } else if (unirse_evento != null){
                 String cadena_id_evento = request.getParameter("id_evento");
                 int id_evento = Integer.parseInt(cadena_id_evento);
                 
                 usuario = unirAevento(usuario, id_evento);
+            
+            // SOLICITUD DE ABANDONO DE EVENTO
+            } else if (abandonar_evento != null){
+                String cadena_id_evento = request.getParameter("id_evento");
+                int id_evento = Integer.parseInt(cadena_id_evento);
+                
+                usuario = abandonarEvento(usuario, id_evento);
             }
             
             response.sendRedirect("index.jsp");
@@ -131,7 +139,26 @@ public class Index extends HttpServlet {
         }
     }
     
+    private Usuario abandonarEvento(Usuario usuario, int id_evento){
+        
+        ArrayList<String> asistentes = new ArrayList<String>();
+        Evento evento_provisional = new Evento(id_evento, Calendar.getInstance(), Calendar.getInstance(), "nogame", asistentes);
+        
+        GestorBDD.eliminarAsistente(usuario, evento_provisional);
+        
+        usuario.setGrupos(GestorBDD.recibirGruposUsuario(usuario));
+        
+        return usuario;
+    }
+    
+    /**
+     * 
+     * @param usuario
+     * @param id_evento
+     * @return 
+     */
     private Usuario unirAevento(Usuario usuario, int id_evento){
+        
         ArrayList<String> asistentes = new ArrayList<String>();
         Evento evento_provisional = new Evento(id_evento, Calendar.getInstance(), Calendar.getInstance(), "nogame", asistentes);
         
@@ -142,6 +169,13 @@ public class Index extends HttpServlet {
         return usuario;
     }
     
+    /**
+     * 
+     * @param usuario
+     * @param id_grupo
+     * @param evento_provisional
+     * @return 
+     */
     private Usuario crearEvento(Usuario usuario, int id_grupo, Evento evento_provisional){
         Evento evento = evento_provisional;
         
@@ -158,6 +192,12 @@ public class Index extends HttpServlet {
         return usuario;
     }
     
+    /**
+     * 
+     * @param id_grupo
+     * @param usuario
+     * @return 
+     */
     private Usuario unirAgrupo( int id_grupo, Usuario usuario){
         System.out.println("Uniendo usuario a grupo...");
         
@@ -174,6 +214,12 @@ public class Index extends HttpServlet {
         return usuario;
     }
     
+    /**
+     * 
+     * @param nombre_grupo
+     * @param usuario
+     * @return 
+     */
     private Usuario crearGrupo(String nombre_grupo, Usuario usuario){
         System.out.println("Creando grupo...");
         
@@ -189,6 +235,12 @@ public class Index extends HttpServlet {
         return usuario;
     }
     
+    /**
+     * 
+     * @param id_grupo
+     * @param usuario
+     * @return 
+     */
     private Usuario abandonarGrupo(int id_grupo, Usuario usuario){
         System.out.println("Abandonando grupo...");
         

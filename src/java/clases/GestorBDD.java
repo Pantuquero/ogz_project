@@ -370,6 +370,8 @@ public class GestorBDD {
             String condiciones = "id_grupo = " + grupo.getIdentificador() + " AND id_usuario = " + usuario.getIdentificador();
             conexion.eliminar(tabla, condiciones);
             
+            mantenimientoBDD();
+            
             return true;
             
         }catch(Exception e){
@@ -480,6 +482,30 @@ public class GestorBDD {
     
     /**
      * 
+     * @param usuario
+     * @param evento 
+     */
+    public static void eliminarAsistente(Usuario usuario, Evento evento){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Eliminando asistente de evento...");
+            
+            String tabla = "predeterminado.evento_usuario";
+            String condiciones = "id_evento = " + evento.getIdentificador() + " AND id_usuario = " + usuario.getIdentificador();
+            conexion.eliminar(tabla, condiciones);
+            
+            mantenimientoBDD();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+    }
+    
+    /**
+     * 
      * @param fecha
      * @return 
      */
@@ -495,6 +521,32 @@ public class GestorBDD {
         cadena_fecha = dia + "/" +  mes + "/" + anio + " " + hora + ":" + minutos + ":" + segundos;
 
         return cadena_fecha;
+    }
+    
+    /**
+     * This function should be a trigger but triggers doesn't work at all using the PgAdmin GUI.
+     */
+    private static void mantenimientoBDD(){
+        Conexion conexion = new Conexion();
+        
+        try {
+            System.out.println("Realizando mantenimiento en la BDD...");
+            
+            // Eliminar los grupos sin usuarios
+            String tabla = "predeterminado.grupos";
+            String condiciones = "id NOT IN (SELECT DISTINCT id_grupo FROM predeterminado.grupo_usuario)";
+            conexion.eliminar(tabla, condiciones);
+            
+            // Eliminar los eventos sin asistentes
+            tabla = "predeterminado.eventos";
+            condiciones = "id NOT IN (SELECT DISTINCT id_evento FROM predeterminado.evento_usuario)";
+            conexion.eliminar(tabla, condiciones);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
     }
     
     /*
