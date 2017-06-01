@@ -104,7 +104,12 @@ $(function () {
                     datos['unirse_evento'] = 'true';
                     datos['id_evento'] = id_evento;
                     
-                    jQuery.post(url, datos);
+                    //document.cookie = "refrescar=" + "true";
+                    jQuery.post(url, datos, function(){
+                        participantes += usuario + ",";
+                        $(this).attr('participantes',participantes);
+                        recargar();
+                    });
                 }
                 
             // Click derecho
@@ -128,7 +133,13 @@ $(function () {
                     datos['abandonar_evento'] = 'true';
                     datos['id_evento'] = id_evento;
                     
-                    jQuery.post(url, datos);
+                    //document.cookie = "refrescar=" + "true";
+                    jQuery.post(url, datos, function(){
+                        usuario += usuario + ",";
+                        participantes.replace(usuario,'');
+                        $(this).attr('participantes',participantes);
+                        recargar();
+                    });
                 }
             }
         });
@@ -167,6 +178,23 @@ $(function () {
         }
         
         return "";
+    }
+    
+    function actualizarGalleta(){
+        var selector = document.getElementById("select_grupos");
+
+        if(selector.length > 0){
+            var valor = selector.options[selector.selectedIndex].value;
+
+            // También establezco la galleta para guardar el grupo actual
+            document.cookie = "grupo_seleccionado=" + valor;
+        }
+    }
+    
+    function recargar() {
+
+        actualizarGalleta();
+        location.reload();
     }
 
     // you can also add more data later on. As an example:

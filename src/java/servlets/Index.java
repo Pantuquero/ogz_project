@@ -78,7 +78,7 @@ public class Index extends HttpServlet {
                     return;
                 }  
                 
-                String cadena_id_grupo = request.getParameter("select_grupos");              
+                String cadena_id_grupo = request.getParameter("select_grupos");
                 int id_grupo = Integer.parseInt(cadena_id_grupo);
                 
                 usuario = abandonarGrupo(id_grupo, usuario);

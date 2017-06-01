@@ -8,18 +8,49 @@ document.getElementById("select_grupos").addEventListener("change",cambioGrupo);
 document.getElementById("desde_hora").addEventListener("change", validarHoraHasta);
 document.getElementById("hasta_hora").addEventListener("change", validarHoraDesde);
 //document.getElementsByClassName("evento").addEventListener("click",infoEvento);
-//document.getElementById("abandonar_grupo").addEventListener("click", validar);
+document.getElementById("abandonar_grupo").addEventListener("click", resetearGalleta);
 
 // Al iniciar
 
 $(document).ready(function(){
     
     //Cargo el grupo en el hidden del formulario 2
-    //var selector = document.getElementById("select_grupos");
-    //var valor = selector.options[0].value;
     var valor = $('#select_grupos').find(":selected").val();
     document.getElementById("grupo_oculto").value = valor;
+    
+    actualizarGalleta();
+    
+    // Si se ha añadido un asistente compruebo la galleta de refrescar
+    /*
+    var galleta = getCookie("refrescar");
+    
+    if(galleta == "true"){
+        document.cookie = "refrescar=" + "false";
+        recargar();
+    }
+    */
 });
+
+function actualizarGalleta(){
+    var selector = document.getElementById("select_grupos");
+    
+    if(selector.length > 0){
+        var valor = selector.options[selector.selectedIndex].value;
+    
+        // También establezco la galleta para guardar el grupo actual
+        document.cookie = "grupo_seleccionado=" + valor;
+    }
+}
+
+function resetearGalleta(){
+    var selector = document.getElementById("select_grupos");
+    
+    if(selector.length > 0){
+        var valor = selector.options[0].value;
+    
+        document.cookie = "grupo_seleccionado=" + valor;
+    }
+}
 
 // Funciones____________________________________________________________________
 
@@ -128,9 +159,31 @@ function cambioGrupo() {
 }
 
 function recargar() {
+    
+    actualizarGalleta();
     location.reload();
 }
 
 function salir () {
     window.location.replace("login.jsp");
+}
+
+function getCookie(cname){
+    var name = cname + "";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for(var i = 0; i < ca.length; i++){
+        var c = ca[i];
+
+        while (c.charAt(0) == ' '){
+            c = c.substring(1);
+        }
+
+        if(c.indexOf(name) == 0){
+            return c.substring(name.length +1, c.length);
+        }
+    }
+
+    return "";
 }
