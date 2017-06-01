@@ -31,7 +31,6 @@ $(function () {
             /*for (var key in dateProperties) {
                 console.log(key + ' = ' + dateProperties[ key ]);
             }*/
-            //alert(dateProperties["day"]);
         },
         
         caldata: codropsEvents
@@ -104,7 +103,6 @@ $(function () {
                     datos['unirse_evento'] = 'true';
                     datos['id_evento'] = id_evento;
                     
-                    //document.cookie = "refrescar=" + "true";
                     jQuery.post(url, datos, function(){
                         participantes += usuario + ",";
                         $(this).attr('participantes',participantes);
@@ -133,7 +131,6 @@ $(function () {
                     datos['abandonar_evento'] = 'true';
                     datos['id_evento'] = id_evento;
                     
-                    //document.cookie = "refrescar=" + "true";
                     jQuery.post(url, datos, function(){
                         usuario += usuario + ",";
                         participantes.replace(usuario,'');

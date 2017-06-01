@@ -21,15 +21,10 @@ $(document).ready(function(){
     
     actualizarGalleta();
     
-    // Si se ha añadido un asistente compruebo la galleta de refrescar
-    /*
-    var galleta = getCookie("refrescar");
-    
-    if(galleta == "true"){
-        document.cookie = "refrescar=" + "false";
-        recargar();
-    }
-    */
+    // Refresco cada minuto
+    setTimeout(function(){
+        location = ''
+    },60000);
 });
 
 function mostrarMiembros(){
