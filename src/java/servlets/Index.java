@@ -185,6 +185,10 @@ public class Index extends HttpServlet {
         
         evento = GestorBDD.insertarEvento(evento_provisional, id_grupo, usuario);
         
+        if(evento == null){
+            return usuario;
+        }
+        
         //Recorro los grupos del usuario para insertar el evento donde toque
         for(int i=0; i <= usuario.getGrupos().size(); i++){
             if(usuario.getGrupos().get(i).getIdentificador() == id_grupo){

@@ -286,6 +286,45 @@ public class GestorBDD {
     }
     
     /**
+     * Checks if the game exists in the database.
+     * @param nombre
+     * @return 
+     */
+    public static boolean validarJuego(String nombre){
+        
+        try {
+            System.out.println("Comprobando juego...");
+            
+            Conexion conexion = new Conexion();
+            int contador = 0;
+            
+            String columnas = "id";
+            String tablas = "predeterminado.juegos";
+            String condiciones = "nombre = '" + nombre + "'";
+            ResultSet resultado = conexion.seleccionar(columnas, tablas, condiciones);
+                        
+            while (resultado.next()){
+                contador++;
+            }
+            resultado.close();
+            
+            if(contador == 0){
+                return false;
+            } else {
+                return true;
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
+        
+        return false;
+        
+    }
+    
+    /**
      * Inserts a group with the passed name and retrieves a group with it's ID.
      * @param grupo
      * @return 
@@ -425,6 +464,10 @@ public class GestorBDD {
         Conexion conexion = new Conexion();
         
         try {
+            if(!validarJuego(evento.getJuego())){
+                return null;
+            }
+            
             System.out.println("Creando evento...");
             
             Calendar fecha_inicio = evento.getFechaInicio();
