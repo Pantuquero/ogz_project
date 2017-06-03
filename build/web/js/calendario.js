@@ -7,6 +7,7 @@ $(function () {
         var grupo_seleccionado = selector.options[selector.selectedIndex].value;
     }else {
         $('#cuadrito_eventos').hide();
+        $('#abandonar_grupo').hide();
     }
     
     //var codropsEvents = {};

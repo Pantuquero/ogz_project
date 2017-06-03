@@ -22,9 +22,11 @@ $(document).ready(function(){
     actualizarGalleta();
     
     // Refresco cada minuto
+    /*
     setTimeout(function(){
         location = ''
     },60000);
+    */
 });
 
 function mostrarMiembros(){
@@ -100,6 +102,7 @@ function validarGrupo() {
         rules: {
             entrada_texto: {
                 required: true,
+                minlength: 1,
                 maxlength: 15
             }
         },
